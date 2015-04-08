@@ -38,13 +38,13 @@ namespace SkylinesOverwatch
             Disabled._PlayerOther           = false;
 
             Disabled._PrivateBuildings      = false;
-            Disabled._ResidentialBuildings	= false;
+            Disabled._ResidentialBuildings  = false;
             Disabled._CommercialBuildings   = false;
             Disabled._IndustrialBuildings   = false;
             Disabled._OfficeBuildings       = false;
             Disabled._PrivateOther          = false;
 
-            Disabled._DeadStatus           	= false;
+            Disabled._DeadStatus            = false;
             Disabled._GarbageStatus         = false;
             Disabled._FireStatus            = false;
             Disabled._CrimeStatus           = false;
