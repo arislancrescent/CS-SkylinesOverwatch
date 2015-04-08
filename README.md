@@ -27,4 +27,4 @@ Mod developers who do not want to waste time creating their own monitoring mecha
 
 ## How to use Skylines Overwatch?
 
-Check out the [API documentation](https://github.com/arislancrescent/CS-SkylinesOverwatch/wiki#skylinesoverwatch-api-documentation)
+Check out the [API documentation](https://github.com/arislancrescent/CS-SkylinesOverwatch/wiki)
