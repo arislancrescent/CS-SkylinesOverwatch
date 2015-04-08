@@ -8,18 +8,18 @@ namespace SkylinesOverwatch
 	{
 		private Data()
 		{
-			_Buildings   				= new HashSet<ushort>();
+			_Buildings					= new HashSet<ushort>();
 			_BuildingsUpdated			= new HashSet<ushort>();
 			_BuildingsRemoved			= new HashSet<ushort>();
 
-			_PlayerBuildings 			= new HashSet<ushort>();
-			_Cemeteries  				= new HashSet<ushort>();
-			_LandfillSites 				= new HashSet<ushort>();
-			_FireStations 				= new HashSet<ushort>();
-			_PoliceStations 			= new HashSet<ushort>();
-			_Hospitals 					= new HashSet<ushort>();
-			_Parks 						= new HashSet<ushort>();
-			_PlayerOther 				= new HashSet<ushort>();
+			_PlayerBuildings			= new HashSet<ushort>();
+			_Cemeteries					= new HashSet<ushort>();
+			_LandfillSites				= new HashSet<ushort>();
+			_FireStations				= new HashSet<ushort>();
+			_PoliceStations				= new HashSet<ushort>();
+			_Hospitals					= new HashSet<ushort>();
+			_Parks						= new HashSet<ushort>();
+			_PlayerOther				= new HashSet<ushort>();
 
 			_PrivateBuildings 			= new HashSet<ushort>();
 			_ResidentialBuildings 		= new HashSet<ushort>();
