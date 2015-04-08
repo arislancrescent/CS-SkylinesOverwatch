@@ -1,4 +1,5 @@
-# [ARIS] Skylines Overwatch
+# Skylines Overwatch  
+Mod Name: `[ARIS] Skylines Overwatch`
 
 Efficient monitoring framework to monitor and categorize buildings, vehicles, citizens, and animals in the city. Pause the game to see a summary of everything currently tracked in the debug window. 
 
