@@ -24,62 +24,60 @@ namespace SkylinesOverwatch
             Debug._HumanMonitor             = true;
             Debug._AnimalMonitor            = true;
 
-            Disabled._All                   = false;
+            Enable._BuildingMonitor         = true;
 
-            Disabled._BuildingMonitor       = false;
+            Enable._PlayerBuildings         = true;
+            Enable._Cemeteries              = true;
+            Enable._LandfillSites           = true;
+            Enable._FireStations            = true;
+            Enable._PoliceStations          = true;
+            Enable._Hospitals               = true;
+            Enable._Parks                   = true;
+            Enable._PlayerOther             = true;
 
-            Disabled._PlayerBuildings       = false;
-            Disabled._Cemeteries            = false;
-            Disabled._LandfillSites         = false;
-            Disabled._FireStations          = false;
-            Disabled._PoliceStations        = false;
-            Disabled._Hospitals             = false;
-            Disabled._Parks                 = false;
-            Disabled._PlayerOther           = false;
+            Enable._PrivateBuildings        = true;
+            Enable._ResidentialBuildings    = true;
+            Enable._CommercialBuildings     = true;
+            Enable._IndustrialBuildings     = true;
+            Enable._OfficeBuildings         = true;
+            Enable._PrivateOther            = true;
 
-            Disabled._PrivateBuildings      = false;
-            Disabled._ResidentialBuildings  = false;
-            Disabled._CommercialBuildings   = false;
-            Disabled._IndustrialBuildings   = false;
-            Disabled._OfficeBuildings       = false;
-            Disabled._PrivateOther          = false;
+            Enable._DeadStatus              = true;
+            Enable._GarbageStatus           = true;
+            Enable._FireStatus              = true;
+            Enable._CrimeStatus             = true;
+            Enable._SickStatus              = true;
 
-            Disabled._DeadStatus            = false;
-            Disabled._GarbageStatus         = false;
-            Disabled._FireStatus            = false;
-            Disabled._CrimeStatus           = false;
-            Disabled._SickStatus            = false;
+            Enable._VehicleMonitor          = true;
 
-            Disabled._VehicleMonitor        = false;
+            Enable._Cars                    = true;
+            Enable._Trains                  = true;
+            Enable._Aircrafts               = true;
+            Enable._Ships                   = true;
+            Enable._VehicleOther            = true;
 
-            Disabled._Cars                  = false;
-            Disabled._Trains                = false;
-            Disabled._Aircrafts             = false;
-            Disabled._Ships                 = false;
-            Disabled._VehicleOther          = false;
+            Enable._Hearses                 = true;
+            Enable._GarbageTrucks           = true;
+            Enable._FireTrucks              = true;
+            Enable._PoliceCars              = true;
+            Enable._Ambulances              = true;
+            Enable._Buses                   = true;
+            Enable._CarOther                = true;
 
-            Disabled._Hearses               = false;
-            Disabled._GarbageTrucks         = false;
-            Disabled._FireTrucks            = false;
-            Disabled._PoliceCars            = false;
-            Disabled._Ambulances            = false;
-            Disabled._Buses                 = false;
-            Disabled._CarOther              = false;
+            Enable._HumanMonitor            = true;
 
-            Disabled._HumanMonitor          = false;
+            Enable._Residents               = true;
+            Enable._ServicePersons          = true;
+            Enable._Tourists                = true;
+            Enable._HumanOther              = true;
 
-            Disabled._Residents             = false;
-            Disabled._ServicePersons        = false;
-            Disabled._Tourists              = false;
-            Disabled._HumanOther            = false;
+            Enable._AnimalMonitor           = true;
 
-            Disabled._AnimalMonitor         = false;
-
-            Disabled._Birds                 = false;
-            Disabled._Livestocks            = false;
-            Disabled._Pets                  = false;
-            Disabled._Wildlife              = false;
-            Disabled._AnimalOther           = false;
+            Enable._Birds                   = true;
+            Enable._Livestocks              = true;
+            Enable._Pets                    = true;
+            Enable._Wildlife                = true;
+            Enable._AnimalOther             = true;
         }
 
         private static readonly Settings _Instance = new Settings();
@@ -89,7 +87,7 @@ namespace SkylinesOverwatch
         public readonly HashSet<string> Animals;
 
         public DebugSettings Debug;
-        public DisabledSettings Disabled;
+        public EnableSettings Enable;
 
         public struct DebugSettings
         {
@@ -101,32 +99,30 @@ namespace SkylinesOverwatch
             public bool BuildingMonitor
             {
                 get { return _BuildingMonitor; }
-                set { if (value && !_BuildingMonitor) _BuildingMonitor = value; }
+                set { if (value) _BuildingMonitor = value; }
             }
 
             public bool VehicleMonitor
             {
                 get { return _VehicleMonitor; }
-                set { if (value && !_VehicleMonitor) _VehicleMonitor = value; }
+                set { if (value) _VehicleMonitor = value; }
             }
 
             public bool HumanMonitor
             {
                 get { return _HumanMonitor; }
-                set { if (value && !_HumanMonitor) _HumanMonitor = value; }
+                set { if (value) _HumanMonitor = value; }
             }
 
             public bool AnimalMonitor
             {
                 get { return _AnimalMonitor; }
-                set { if (value && !_AnimalMonitor) _AnimalMonitor = value; }
+                set { if (value) _AnimalMonitor = value; }
             }
         }
 
-        public struct DisabledSettings
+        public struct EnableSettings
         {
-            internal bool _All;
-
             internal bool _BuildingMonitor;
 
             internal bool _PlayerBuildings;
@@ -185,265 +181,265 @@ namespace SkylinesOverwatch
             public bool BuildingMonitor
             {
                 get { return _BuildingMonitor; }
-                set { if (value && !_BuildingMonitor) _BuildingMonitor = value; }
+                set { if (value) _BuildingMonitor = value; }
             }
 
             public bool PlayerBuildings
             {
                 get { return _PlayerBuildings; }
-                set { if (value && !_PlayerBuildings) _PlayerBuildings = value; }
+                set { if (value) _PlayerBuildings = value; }
             }
 
             public bool Cemeteries
             {
                 get { return _Cemeteries; }
-                set { if (value && !_Cemeteries) _Cemeteries = value; }
+                set { if (value) _Cemeteries = value; }
             }
 
             public bool LandfillSites
             {
                 get { return _LandfillSites; }
-                set { if (value && !_LandfillSites) _LandfillSites = value; }
+                set { if (value) _LandfillSites = value; }
             }
 
             public bool FireStations
             {
                 get { return _FireStations; }
-                set { if (value && !_FireStations) _FireStations = value; }
+                set { if (value) _FireStations = value; }
             }
 
             public bool PoliceStations
             {
                 get { return _PoliceStations; }
-                set { if (value && !_PoliceStations) _PoliceStations = value; }
+                set { if (value) _PoliceStations = value; }
             }
 
             public bool Hospitals
             {
                 get { return _Hospitals; }
-                set { if (value && !_Hospitals) _Hospitals = value; }
+                set { if (value) _Hospitals = value; }
             }
 
             public bool Parks
             {
                 get { return _Parks; }
-                set { if (value && !_Parks) _Parks = value; }
+                set { if (value) _Parks = value; }
             }
 
             public bool PlayerOther
             {
                 get { return _PlayerOther; }
-                set { if (value && !_PlayerOther) _PlayerOther = value; }
+                set { if (value) _PlayerOther = value; }
             }
 
             public bool PrivateBuildings
             {
                 get { return _PrivateBuildings; }
-                set { if (value && !_PrivateBuildings) _PrivateBuildings = value; }
+                set { if (value) _PrivateBuildings = value; }
             }
 
             public bool ResidentialBuildings
             {
                 get { return _ResidentialBuildings; }
-                set { if (value && !_ResidentialBuildings) _ResidentialBuildings = value; }
+                set { if (value) _ResidentialBuildings = value; }
             }
 
             public bool CommercialBuildings
             {
                 get { return _CommercialBuildings; }
-                set { if (value && !_CommercialBuildings) _CommercialBuildings = value; }
+                set { if (value) _CommercialBuildings = value; }
             }
 
             public bool IndustrialBuildings
             {
                 get { return _IndustrialBuildings; }
-                set { if (value && !_IndustrialBuildings) _IndustrialBuildings = value; }
+                set { if (value) _IndustrialBuildings = value; }
             }
 
             public bool OfficeBuildings
             {
                 get { return _OfficeBuildings; }
-                set { if (value && !_OfficeBuildings) _OfficeBuildings = value; }
+                set { if (value) _OfficeBuildings = value; }
             }
 
             public bool PrivateOther
             {
                 get { return _PrivateOther; }
-                set { if (value && !_PrivateOther) _PrivateOther = value; }
+                set { if (value) _PrivateOther = value; }
             }
 
             public bool DeadStatus
             {
                 get { return _DeadStatus; }
-                set { if (value && !_DeadStatus) _DeadStatus = value; }
+                set { if (value) _DeadStatus = value; }
             }
 
             public bool GarbageStatus
             {
                 get { return _GarbageStatus; }
-                set { if (value && !_GarbageStatus) _GarbageStatus = value; }
+                set { if (value) _GarbageStatus = value; }
             }
 
             public bool FireStatus
             {
                 get { return _FireStatus; }
-                set { if (value && !_FireStatus) _FireStatus = value; }
+                set { if (value) _FireStatus = value; }
             }
 
             public bool CrimeStatus
             {
                 get { return _CrimeStatus; }
-                set { if (value && !_CrimeStatus) _CrimeStatus = value; }
+                set { if (value) _CrimeStatus = value; }
             }
 
             public bool SickStatus
             {
                 get { return _SickStatus; }
-                set { if (value && !_SickStatus) _SickStatus = value; }
+                set { if (value) _SickStatus = value; }
             }
 
             public bool VehicleMonitor
             {
                 get { return _VehicleMonitor; }
-                set { if (value && !_VehicleMonitor) _VehicleMonitor = value; }
+                set { if (value) _VehicleMonitor = value; }
             }
 
             public bool Cars
             {
                 get { return _Cars; }
-                set { if (value && !_Cars) _Cars = value; }
+                set { if (value) _Cars = value; }
             }
 
             public bool Trains
             {
                 get { return _Trains; }
-                set { if (value && !_Trains) _Trains = value; }
+                set { if (value) _Trains = value; }
             }
 
             public bool Aircrafts
             {
                 get { return _Aircrafts; }
-                set { if (value && !_Aircrafts) _Aircrafts = value; }
+                set { if (value) _Aircrafts = value; }
             }
 
             public bool Ships
             {
                 get { return _Ships; }
-                set { if (value && !_Ships) _Ships = value; }
+                set { if (value) _Ships = value; }
             }
 
             public bool VehicleOther
             {
                 get { return _VehicleOther; }
-                set { if (value && !_VehicleOther) _VehicleOther = value; }
+                set { if (value) _VehicleOther = value; }
             }
 
             public bool Hearses
             {
                 get { return _Hearses; }
-                set { if (value && !_Hearses) _Hearses = value; }
+                set { if (value) _Hearses = value; }
             }
 
             public bool GarbageTrucks
             {
                 get { return _GarbageTrucks; }
-                set { if (value && !_GarbageTrucks) _GarbageTrucks = value; }
+                set { if (value) _GarbageTrucks = value; }
             }
 
             public bool FireTrucks
             {
                 get { return _FireTrucks; }
-                set { if (value && !_FireTrucks) _FireTrucks = value; }
+                set { if (value) _FireTrucks = value; }
             }
 
             public bool PoliceCars
             {
                 get { return _PoliceCars; }
-                set { if (value && !_PoliceCars) _PoliceCars = value; }
+                set { if (value) _PoliceCars = value; }
             }
 
             public bool Ambulances
             {
                 get { return _Ambulances; }
-                set { if (value && !_Ambulances) _Ambulances = value; }
+                set { if (value) _Ambulances = value; }
             }
 
             public bool Buses
             {
                 get { return _Buses; }
-                set { if (value && !_Buses) _Buses = value; }
+                set { if (value) _Buses = value; }
             }
 
             public bool CarOther
             {
                 get { return _CarOther; }
-                set { if (value && !_CarOther) _CarOther = value; }
+                set { if (value) _CarOther = value; }
             }
 
             public bool HumanMonitor
             {
                 get { return _HumanMonitor; }
-                set { if (value && !_HumanMonitor) _HumanMonitor = value; }
+                set { if (value) _HumanMonitor = value; }
             }
 
             public bool Residents
             {
                 get { return _Residents; }
-                set { if (value && !_Residents) _Residents = value; }
+                set { if (value) _Residents = value; }
             }
 
             public bool ServicePersons
             {
                 get { return _ServicePersons; }
-                set { if (value && !_ServicePersons) _ServicePersons = value; }
+                set { if (value) _ServicePersons = value; }
             }
 
             public bool Tourists
             {
                 get { return _Tourists; }
-                set { if (value && !_Tourists) _Tourists = value; }
+                set { if (value) _Tourists = value; }
             }
 
             public bool HumanOther
             {
                 get { return _HumanOther; }
-                set { if (value && !_HumanOther) _HumanOther = value; }
+                set { if (value) _HumanOther = value; }
             }
 
             public bool AnimalMonitor
             {
                 get { return _AnimalMonitor; }
-                set { if (value && !_AnimalMonitor) _AnimalMonitor = value; }
+                set { if (value) _AnimalMonitor = value; }
             }
 
             public bool Birds
             {
                 get { return _Birds; }
-                set { if (value && !_Birds) _Birds = value; }
+                set { if (value) _Birds = value; }
             }
 
             public bool Livestocks
             {
                 get { return _Livestocks; }
-                set { if (value && !_Livestocks) _Livestocks = value; }
+                set { if (value) _Livestocks = value; }
             }
 
             public bool Pets
             {
                 get { return _Pets; }
-                set { if (value && !_Pets) _Pets = value; }
+                set { if (value) _Pets = value; }
             }
 
             public bool Wildlife
             {
                 get { return _Wildlife; }
-                set { if (value && !_Wildlife) _Wildlife = value; }
+                set { if (value) _Wildlife = value; }
             }
 
             public bool AnimalOther
             {
                 get { return _AnimalOther; }
-                set { if (value && !_AnimalOther) _AnimalOther = value; }
+                set { if (value) _AnimalOther = value; }
             }
         }
     }

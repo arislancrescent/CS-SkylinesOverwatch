@@ -83,7 +83,7 @@ namespace SkylinesOverwatch
 
             if (!_helper.AnimalMonitorSpinnable) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._AnimalMonitor) return;
+            if (!_settings.Enable._AnimalMonitor) return;
 
             try
             {
@@ -316,26 +316,26 @@ namespace SkylinesOverwatch
 
             _data._Animals.Add(_id);
 
-            if (!_settings.Disabled._Birds          && CheckBird())
+            if (_settings.Enable._Birds          && CheckBird())
             {
                 if (CheckSeagull()) return true;
 
                 return true;
             }
-            if (!_settings.Disabled._Livestocks     && CheckLivestock())
+            if (_settings.Enable._Livestocks     && CheckLivestock())
             {
                 if (CheckCow()) return true;
                 if (CheckPig()) return true;
 
                 return true;
             }
-            if (!_settings.Disabled._Pets           && CheckPet())
+            if (_settings.Enable._Pets           && CheckPet())
             {
                 if (CheckDog()) return true;
 
                 return true;
             }
-            if (!_settings.Disabled._Wildlife       && CheckWildlife())
+            if (_settings.Enable._Wildlife       && CheckWildlife())
             {
                 if (CheckWolf()) return true;
                 if (CheckBear()) return true;
@@ -343,7 +343,7 @@ namespace SkylinesOverwatch
 
                 return true;
             }
-            if (!_settings.Disabled._AnimalOther	&& CheckAnimalOther())
+            if (_settings.Enable._AnimalOther	 && CheckAnimalOther())
             {
                 return true;
             }
@@ -474,7 +474,7 @@ namespace SkylinesOverwatch
 
             if (!_settings.Debug._AnimalMonitor) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._AnimalMonitor) return;
+            if (!_settings.Enable._AnimalMonitor) return;
 
             if (!_initialized) return;
 

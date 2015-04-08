@@ -56,7 +56,7 @@ namespace SkylinesOverwatch
                 return;
             }
 
-            if (_settings.Disabled._All || _settings.Disabled._BuildingMonitor) return;
+            if (!_settings.Enable._BuildingMonitor) return;
 
             if (!_initialized) return;
 
@@ -108,7 +108,7 @@ namespace SkylinesOverwatch
         {
             if (!_helper.BuildingMonitorSpinnable) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._BuildingMonitor) return;
+            if (!_settings.Enable._BuildingMonitor) return;
 
             try
             {
@@ -287,34 +287,34 @@ namespace SkylinesOverwatch
             if (!GetBuilding() || !CheckBuilding())
                 return false;
 
-            if (!_settings.Disabled._PlayerBuildings            && _isPlayer)
+            if (_settings.Enable._PlayerBuildings            && _isPlayer)
             {
-                if (!_settings.Disabled._Cemeteries             && CheckCemetery())
+                if (_settings.Enable._Cemeteries             && CheckCemetery())
                     return true;
-                if (!_settings.Disabled._LandfillSites          && CheckLandfillSite())
+                if (_settings.Enable._LandfillSites          && CheckLandfillSite())
                     return true;
-                if (!_settings.Disabled._FireStations           && CheckFireStation())
+                if (_settings.Enable._FireStations           && CheckFireStation())
                     return true;
-                if (!_settings.Disabled._PoliceStations         && CheckPoliceStation())
+                if (_settings.Enable._PoliceStations         && CheckPoliceStation())
                     return true;
-                if (!_settings.Disabled._Hospitals              && CheckHospital())
+                if (_settings.Enable._Hospitals              && CheckHospital())
                     return true;
-                if (!_settings.Disabled._Parks                  && CheckPark())
+                if (_settings.Enable._Parks                  && CheckPark())
                     return true;
-                if (!_settings.Disabled._PlayerOther            && CheckPlayerOther())
+                if (_settings.Enable._PlayerOther            && CheckPlayerOther())
                     return true;
             }
-            else if (!_settings.Disabled._PrivateBuildings      && _isPrivate)
+            else if (_settings.Enable._PrivateBuildings      && _isPrivate)
             {
-                if (!_settings.Disabled._ResidentialBuildings	&& CheckResidentialBuilding())
+                if (_settings.Enable._ResidentialBuildings	 && CheckResidentialBuilding())
                     return true;
-                if (!_settings.Disabled._CommercialBuildings    && CheckCommercialBuilding())
+                if (_settings.Enable._CommercialBuildings    && CheckCommercialBuilding())
                     return true;
-                if (!_settings.Disabled._IndustrialBuildings    && CheckIndustrialBuilding())
+                if (_settings.Enable._IndustrialBuildings    && CheckIndustrialBuilding())
                     return true;
-                if (!_settings.Disabled._OfficeBuildings        && CheckOfficeBuilding())
+                if (_settings.Enable._OfficeBuildings        && CheckOfficeBuilding())
                     return true;
-                if (!_settings.Disabled._PrivateOther           && CheckPrivateOther())
+                if (_settings.Enable._PrivateOther           && CheckPrivateOther())
                     return true;
             }
 
@@ -335,15 +335,15 @@ namespace SkylinesOverwatch
         {
             if (!CheckAbandoned())
             {
-                if (!_settings.Disabled._DeadStatus     && CheckDead())
+                if (_settings.Enable._DeadStatus     && CheckDead())
                     return true;
-                if (!_settings.Disabled._GarbageStatus	&& CheckGarbage())
+                if (_settings.Enable._GarbageStatus	 && CheckGarbage())
                     return true;
-                if (!_settings.Disabled._FireStatus     && CheckFire())
+                if (_settings.Enable._FireStatus     && CheckFire())
                     return true;
-                if (!_settings.Disabled._CrimeStatus    && CheckCrime())
+                if (_settings.Enable._CrimeStatus    && CheckCrime())
                     return true;
-                if (!_settings.Disabled._SickStatus     && CheckSick())
+                if (_settings.Enable._SickStatus     && CheckSick())
                     return true;
             }
 
@@ -551,7 +551,7 @@ namespace SkylinesOverwatch
 
             if (!_settings.Debug._BuildingMonitor) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._BuildingMonitor) return;
+            if (!_settings.Enable._BuildingMonitor) return;
 
             if (!_initialized) return;
 

@@ -80,7 +80,7 @@ namespace SkylinesOverwatch
         {
             if (!_helper.VehicleMonitorSpinnable) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._VehicleMonitor) return;
+            if (!_settings.Enable._VehicleMonitor) return;
 
             try
             {
@@ -241,32 +241,32 @@ namespace SkylinesOverwatch
             if (!GetVehicle() || !CheckVehicle())
                 return false;
 
-            if (!_settings.Disabled._Cars               && _isCar)
+            if (_settings.Enable._Cars               && _isCar)
             {
-                if (!_settings.Disabled._Hearses        && CheckHearse())
+                if (_settings.Enable._Hearses        && CheckHearse())
                     return true;
-                if (!_settings.Disabled._GarbageTrucks  && CheckGarbageTruck())
+                if (_settings.Enable._GarbageTrucks  && CheckGarbageTruck())
                     return true;
-                if (!_settings.Disabled._FireTrucks     && CheckFireTruck())
+                if (_settings.Enable._FireTrucks     && CheckFireTruck())
                     return true;
-                if (!_settings.Disabled._PoliceCars     && CheckPoliceCar())
+                if (_settings.Enable._PoliceCars     && CheckPoliceCar())
                     return true;
-                if (!_settings.Disabled._Ambulances     && CheckAmbulance())
+                if (_settings.Enable._Ambulances     && CheckAmbulance())
                     return true;
-                if (!_settings.Disabled._Buses          && CheckBus())
+                if (_settings.Enable._Buses          && CheckBus())
                     return true;
-                if (!_settings.Disabled._CarOther       && CheckCarOther())
+                if (_settings.Enable._CarOther       && CheckCarOther())
                     return true;
             }
             else if (!_isCar)
             {
-                if (!_settings.Disabled._Trains         && CheckTrain())
+                if (_settings.Enable._Trains         && CheckTrain())
                     return true;
-                if (!_settings.Disabled._Aircrafts      && CheckAircraft())
+                if (_settings.Enable._Aircrafts      && CheckAircraft())
                     return true;
-                if (!_settings.Disabled._Ships          && CheckShip())
+                if (_settings.Enable._Ships          && CheckShip())
                     return true;
-                if (!_settings.Disabled._VehicleOther   && CheckVehicleOther())
+                if (_settings.Enable._VehicleOther   && CheckVehicleOther())
                     return true;
             }
 
@@ -384,7 +384,7 @@ namespace SkylinesOverwatch
 
             if (!_settings.Debug._VehicleMonitor) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._VehicleMonitor) return;
+            if (!_settings.Enable._VehicleMonitor) return;
 
             if (!_initialized) return;
 

@@ -79,7 +79,7 @@ namespace SkylinesOverwatch
         {
             if (!_helper.HumanMonitorSpinnable) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._HumanMonitor) return;
+            if (!_settings.Enable._HumanMonitor) return;
 
             try
             {
@@ -241,13 +241,13 @@ namespace SkylinesOverwatch
 
             _data._Humans.Add(_id);
 
-            if (!_settings.Disabled._Residents          && CheckResident())
+            if (_settings.Enable._Residents          && CheckResident())
                 return true;
-            if (!_settings.Disabled._ServicePersons     && CheckServicePerson())
+            if (_settings.Enable._ServicePersons     && CheckServicePerson())
                 return true;
-            if (!_settings.Disabled._Tourists           && CheckTourist())
+            if (_settings.Enable._Tourists           && CheckTourist())
                 return true;
-            if (!_settings.Disabled._HumanOther         && CheckHumanOther())
+            if (_settings.Enable._HumanOther         && CheckHumanOther())
                 return true;
 
             return false;
@@ -310,7 +310,7 @@ namespace SkylinesOverwatch
 
             if (!_settings.Debug._HumanMonitor) return;
 
-            if (_settings.Disabled._All || _settings.Disabled._HumanMonitor) return;
+            if (!_settings.Enable._HumanMonitor) return;
 
             if (!_initialized) return;
 
