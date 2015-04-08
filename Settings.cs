@@ -182,12 +182,6 @@ namespace SkylinesOverwatch
             internal bool _Wildlife;
             internal bool _AnimalOther;
 
-            public bool All
-            {
-                get { return _All; }
-                set { if (value && !_All) _All = value; }
-            }
-
             public bool BuildingMonitor
             {
                 get { return _BuildingMonitor; }
