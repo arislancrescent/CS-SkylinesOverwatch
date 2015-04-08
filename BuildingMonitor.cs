@@ -50,6 +50,8 @@ namespace SkylinesOverwatch
          */
         public override void OnBeforeSimulationTick()
         {
+            if (_terminated) return;
+
             if (!_helper.BuildingMonitorSpun)
             {
                 _initialized = false;
@@ -106,6 +108,8 @@ namespace SkylinesOverwatch
          */
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
+            if (_terminated) return;
+
             if (!_helper.BuildingMonitorSpinnable) return;
 
             if (!_settings.Enable._BuildingMonitor) return;

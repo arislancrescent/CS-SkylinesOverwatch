@@ -42,6 +42,8 @@ namespace SkylinesOverwatch
 
         public override void OnBeforeSimulationTick()
         {
+            if (_terminated) return;
+
             if (!_helper.VehicleMonitorSpun)
             {
                 _initialized = false;
@@ -78,6 +80,8 @@ namespace SkylinesOverwatch
          */
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
+            if (_terminated) return;
+
             if (!_helper.VehicleMonitorSpinnable) return;
 
             if (!_settings.Enable._VehicleMonitor) return;

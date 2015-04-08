@@ -43,6 +43,8 @@ namespace SkylinesOverwatch
 
         public override void OnBeforeSimulationTick()
         {
+            if (_terminated) return;
+
             if (!_helper.AnimalMonitorSpun)
             {
                 _initialized = false;
