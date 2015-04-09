@@ -18,18 +18,18 @@ namespace SkylinesOverwatch
         {
             _helper = Helper.Instance;
 
-            _helper._GameLoaded = loading.loadingComplete;
+            _helper.GameLoaded = loading.loadingComplete;
         }
 
         public override void OnLevelLoaded(LoadMode mode)
         {
             if (mode == LoadMode.NewGame || mode == LoadMode.LoadGame)
-                _helper._GameLoaded = true;
+                _helper.GameLoaded = true;
         }
 
         public override void OnLevelUnloading()
         {
-            _helper._GameLoaded = false;
+            _helper.GameLoaded = false;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SkylinesOverwatch
     {
         private Helper()
         {
-            _GameLoaded                     = false;
+            GameLoaded                      = false;
 
             _BuildingMonitorSpun            = false;
             _VehicleMonitorSpun             = false;
@@ -74,9 +74,7 @@ namespace SkylinesOverwatch
         public static Helper Instance { get { return _Instance; } }
 
         internal AiTypes AiType;
-
-        internal bool _GameLoaded;
-        public bool GameLoaded { get { return _GameLoaded; } }
+        internal bool GameLoaded;
 
         private bool _BuildingMonitorSpun;
         private bool _VehicleMonitorSpun;
