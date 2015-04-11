@@ -1,17 +1,22 @@
 # Skylines Overwatch  
 Steam Workshop: [[ARIS] Skylines Overwatch](http://steamcommunity.com/sharedfiles/filedetails/?id=421028969)
 
-Efficient monitoring framework to monitor and categorize buildings, vehicles, citizens, and animals in the city. Pause the game to see a summary of everything currently tracked in the debug window. 
+Efficient active ID monitoring framework to monitor and categorize buildings, vehicles, citizens, and animals in the city. Pause the game to see a summary of everything currently tracked in the debug window. 
 
 Check out the new [FAQ](https://github.com/arislancrescent/CS-SkylinesOverwatch/wiki/FAQ)!
 
 ## What is this?
 
-This is a monitoring framework other mods can attach to to get the data they need. 
+This is a monitoring framework other mods can attach to to get the active IDs for the categories they need, and saving mod developers from having to separate the active IDs from inactive ones themselves.
 
-## Who is this for?
+## Why is this needed?
 
-Mod developers who do not want to waste time creating their own monitoring mechanics, and those who want a better one. 
+Cities: Skylines' code does not automatically provide direct access to active IDs. For example, buildings have a maximum set of 32,768 possible IDs. When creating a new building, the game randomly selects an unused ID out of the full set. But without a record of all the active IDs, a modder seeking to check all created buildings would have to loop through the entire 32,768 possible IDs just to find the handful that are actually active. This creates several issues:
+
+1. Without proper attention, a mod performing such checks can be very inefficient and lead to significant FPS drops. The situation compounds when multiple mods are performing the same checks.
+2. Even with optimization, as long as a mod doesn't match the game perfectly, it can have delays in detecting changes. For example, a mod that detects the spawning of seagulls can have new seagulls flying around for several seconds before even realizing they are there. For many applications, this kind of delay in reaction harms player experience greatly.
+
+Skylines Overwatch solves both of these issues.
 
 ## Why Skylines Overwatch?
 
