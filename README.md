@@ -14,9 +14,10 @@ This is a monitoring framework other mods can attach to to get the active IDs fo
 Cities: Skylines' code does not automatically provide direct access to active IDs. For example, buildings have a maximum set of 32,768 possible IDs. When creating a new building, the game randomly selects an unused ID out of the full set. But without a record of all the active IDs, a modder seeking to check all created buildings would have to loop through the entire 32,768 possible IDs just to find the handful that are actually active. This creates several issues:
 
 1. Without proper attention, a mod performing such checks can be very inefficient and lead to significant FPS drops. The situation compounds when multiple mods are performing the same checks.
+
 2. Even with optimization, as long as a mod doesn't match the game perfectly, it can have delays in detecting changes. For example, a mod that detects the spawning of seagulls can have new seagulls flying around for several seconds before even realizing they are there. For many applications, this kind of delay in reaction harms player experience greatly.
 
-Skylines Overwatch solves both of these issues.
+Skylines Overwatch solves both of these issues and frees up modders to focus on what they truly want to accomplish.
 
 ## Why Skylines Overwatch?
 
