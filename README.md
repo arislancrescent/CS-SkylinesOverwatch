@@ -3,6 +3,8 @@ Steam Workshop: [[ARIS] Skylines Overwatch](http://steamcommunity.com/sharedfile
 
 Efficient monitoring framework to monitor and categorize buildings, vehicles, citizens, and animals in the city. Pause the game to see a summary of everything currently tracked in the debug window. 
 
+Check out the new [FAQ](https://github.com/arislancrescent/CS-SkylinesOverwatch/wiki/FAQ)!
+
 ## What is this?
 
 This is a monitoring framework other mods can attach to to get the data they need. 
