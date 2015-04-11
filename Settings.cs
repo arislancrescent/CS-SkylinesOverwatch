@@ -7,41 +7,7 @@ namespace SkylinesOverwatch
     {
         private Settings()
         {
-            var debug      = false;
-            var enable     = false;
-
-            #if DEBUG
-
-            IsDebugBuild   = true;
-            IsPTRBuild     = false;
-            IsReleaseBuild = false;
-
-            Flair         += "ARIS LOCAL";
-
-            debug          = true;
-            enable         = true;
-
-            #elif PTR
-
-            IsDebugBuild   = false;
-            IsPTRBuild     = true;
-            IsReleaseBuild = false;
-
-            Flair         += "ARIS PTR";
-
-            debug          = true;
-
-            #else
-
-            IsDebugBuild   = false;
-            IsPTRBuild     = false;
-            IsReleaseBuild = true;
-
-            Flair         += "ARIS";
-
-            #endif
-
-            Tag = String.Format("[{0}] Skylines Overwatch", Flair);
+            Tag = "[ARIS] Skylines Overwatch";
 
             Animals = new HashSet<string>();
             Animals.Add("Seagull");
@@ -53,77 +19,72 @@ namespace SkylinesOverwatch
             Animals.Add("MooseMale");
             Animals.Add("MooseFemale");
 
-            Debug._BuildingMonitor          = debug;
-            Debug._VehicleMonitor           = debug;
-            Debug._HumanMonitor             = debug;
-            Debug._AnimalMonitor            = debug;
+            Debug._BuildingMonitor          = false;
+            Debug._VehicleMonitor           = false;
+            Debug._HumanMonitor             = false;
+            Debug._AnimalMonitor            = false;
 
-            Enable._BuildingMonitor         = enable;
+            Enable._BuildingMonitor         = false;
 
-            Enable._PlayerBuildings         = enable;
-            Enable._Cemeteries              = enable;
-            Enable._LandfillSites           = enable;
-            Enable._FireStations            = enable;
-            Enable._PoliceStations          = enable;
-            Enable._Hospitals               = enable;
-            Enable._Parks                   = enable;
-            Enable._PlayerOther             = enable;
+            Enable._PlayerBuildings         = false;
+            Enable._Cemeteries              = false;
+            Enable._LandfillSites           = false;
+            Enable._FireStations            = false;
+            Enable._PoliceStations          = false;
+            Enable._Hospitals               = false;
+            Enable._Parks                   = false;
+            Enable._PlayerOther             = false;
 
-            Enable._PrivateBuildings        = enable;
-            Enable._ResidentialBuildings    = enable;
-            Enable._CommercialBuildings     = enable;
-            Enable._IndustrialBuildings     = enable;
-            Enable._OfficeBuildings         = enable;
-            Enable._PrivateOther            = enable;
+            Enable._PrivateBuildings        = false;
+            Enable._ResidentialBuildings    = false;
+            Enable._CommercialBuildings     = false;
+            Enable._IndustrialBuildings     = false;
+            Enable._OfficeBuildings         = false;
+            Enable._PrivateOther            = false;
 
-            Enable._DeadStatus              = enable;
-            Enable._GarbageStatus           = enable;
-            Enable._FireStatus              = enable;
-            Enable._CrimeStatus             = enable;
-            Enable._SickStatus              = enable;
+            Enable._DeadStatus              = false;
+            Enable._GarbageStatus           = false;
+            Enable._FireStatus              = false;
+            Enable._CrimeStatus             = false;
+            Enable._SickStatus              = false;
 
-            Enable._VehicleMonitor          = enable;
+            Enable._VehicleMonitor          = false;
 
-            Enable._Cars                    = enable;
-            Enable._Trains                  = enable;
-            Enable._Aircrafts               = enable;
-            Enable._Ships                   = enable;
-            Enable._VehicleOther            = enable;
+            Enable._Cars                    = false;
+            Enable._Trains                  = false;
+            Enable._Aircrafts               = false;
+            Enable._Ships                   = false;
+            Enable._VehicleOther            = false;
 
-            Enable._Hearses                 = enable;
-            Enable._GarbageTrucks           = enable;
-            Enable._FireTrucks              = enable;
-            Enable._PoliceCars              = enable;
-            Enable._Ambulances              = enable;
-            Enable._Buses                   = enable;
-            Enable._CarOther                = enable;
+            Enable._Hearses                 = false;
+            Enable._GarbageTrucks           = false;
+            Enable._FireTrucks              = false;
+            Enable._PoliceCars              = false;
+            Enable._Ambulances              = false;
+            Enable._Buses                   = false;
+            Enable._CarOther                = false;
 
-            Enable._HumanMonitor            = enable;
+            Enable._HumanMonitor            = false;
 
-            Enable._Residents               = enable;
-            Enable._ServicePersons          = enable;
-            Enable._Tourists                = enable;
-            Enable._HumanOther              = enable;
+            Enable._Residents               = false;
+            Enable._ServicePersons          = false;
+            Enable._Tourists                = false;
+            Enable._HumanOther              = false;
 
-            Enable._AnimalMonitor           = enable;
+            Enable._AnimalMonitor           = false;
 
-            Enable._Birds                   = enable;
-            Enable._Livestocks              = enable;
-            Enable._Pets                    = enable;
-            Enable._Wildlife                = enable;
-            Enable._AnimalOther             = enable;
+            Enable._Birds                   = false;
+            Enable._Livestocks              = false;
+            Enable._Pets                    = false;
+            Enable._Wildlife                = false;
+            Enable._AnimalOther             = false;
         }
 
         private static readonly Settings _Instance = new Settings();
         public static Settings Instance { get { return _Instance; } }
 
-        public readonly string Flair;
         public readonly string Tag;
         public readonly HashSet<string> Animals;
-
-        public readonly bool IsDebugBuild;
-        public readonly bool IsPTRBuild;
-        public readonly bool IsReleaseBuild;
 
         public DebugSettings Debug;
         public EnableSettings Enable;
@@ -448,7 +409,14 @@ namespace SkylinesOverwatch
             public bool AnimalMonitor
             {
                 get { return _AnimalMonitor; }
-                set { if (value) _AnimalMonitor = value; }
+                set
+                {
+                    if (value)
+                    {
+                        _BuildingMonitor = value;
+                        _AnimalMonitor = value;
+                    }
+                }
             }
 
             public bool Birds

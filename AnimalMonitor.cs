@@ -176,24 +176,27 @@ namespace SkylinesOverwatch
 
             _helper.AnimalMonitorSpun = false;
 
-            _data._Animals.Clear();
+            if (_data != null)
+            {
+                _data._Animals.Clear();
 
-            _data._Birds.Clear();
-            _data._Seagulls.Clear();
+                _data._Birds.Clear();
+                _data._Seagulls.Clear();
 
-            _data._Livestocks.Clear();
-            _data._Cows.Clear();
-            _data._Pigs.Clear();
+                _data._Livestocks.Clear();
+                _data._Cows.Clear();
+                _data._Pigs.Clear();
 
-            _data._Pets.Clear();
-            _data._Dogs.Clear();
+                _data._Pets.Clear();
+                _data._Dogs.Clear();
 
-            _data._Wildlife.Clear();
-            _data._Wolves.Clear();
-            _data._Bears.Clear();
-            _data._Moose.Clear();
+                _data._Wildlife.Clear();
+                _data._Wolves.Clear();
+                _data._Bears.Clear();
+                _data._Moose.Clear();
 
-            _data._AnimalOther.Clear();
+                _data._AnimalOther.Clear();
+            }
 
             base.OnReleased();
         }

@@ -160,21 +160,24 @@ namespace SkylinesOverwatch
 
             _helper.VehicleMonitorSpun = false;
 
-            _data._Vehicles.Clear();
+            if (_data != null)
+            {
+                _data._Vehicles.Clear();
 
-            _data._Cars.Clear();
-            _data._Trains.Clear();
-            _data._Aircrafts.Clear();
-            _data._Ships.Clear();
-            _data._VehicleOther.Clear();
+                _data._Cars.Clear();
+                _data._Trains.Clear();
+                _data._Aircrafts.Clear();
+                _data._Ships.Clear();
+                _data._VehicleOther.Clear();
 
-            _data._Hearses.Clear();
-            _data._GarbageTrucks.Clear();
-            _data._FireTrucks.Clear();
-            _data._PoliceCars.Clear();
-            _data._Ambulances.Clear();
-            _data._Buses.Clear();
-            _data._CarOther.Clear();
+                _data._Hearses.Clear();
+                _data._GarbageTrucks.Clear();
+                _data._FireTrucks.Clear();
+                _data._PoliceCars.Clear();
+                _data._Ambulances.Clear();
+                _data._Buses.Clear();
+                _data._CarOther.Clear();
+            }
 
             base.OnReleased();
         }

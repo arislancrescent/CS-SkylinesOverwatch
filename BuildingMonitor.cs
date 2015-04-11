@@ -196,30 +196,33 @@ namespace SkylinesOverwatch
 
             _helper.BuildingMonitorSpun = false;
 
-            _data._Buildings.Clear();
+            if (_data != null)
+            {
+                _data._Buildings.Clear();
 
-            _data._PlayerBuildings.Clear();
-            _data._Cemeteries.Clear();
-            _data._LandfillSites.Clear();
-            _data._FireStations.Clear();
-            _data._PoliceStations.Clear();
-            _data._Hospitals.Clear();
-            _data._Parks.Clear();
-            _data._PlayerOther.Clear();
+                _data._PlayerBuildings.Clear();
+                _data._Cemeteries.Clear();
+                _data._LandfillSites.Clear();
+                _data._FireStations.Clear();
+                _data._PoliceStations.Clear();
+                _data._Hospitals.Clear();
+                _data._Parks.Clear();
+                _data._PlayerOther.Clear();
 
-            _data._PrivateBuildings.Clear();
-            _data._ResidentialBuildings.Clear();
-            _data._CommercialBuildings.Clear();
-            _data._IndustrialBuildings.Clear();
-            _data._OfficeBuildings.Clear();
-            _data._PrivateOther.Clear();
+                _data._PrivateBuildings.Clear();
+                _data._ResidentialBuildings.Clear();
+                _data._CommercialBuildings.Clear();
+                _data._IndustrialBuildings.Clear();
+                _data._OfficeBuildings.Clear();
+                _data._PrivateOther.Clear();
 
-            _data._BuildingsWithDead.Clear();
-            _data._BuildingsWithGarbage.Clear();
-            _data._BuildingsWithFire.Clear();
-            _data._BuildingsWithCrime.Clear();
-            _data._BuildingsWithSick.Clear();
-            _data._BuildingsAbandoned.Clear();
+                _data._BuildingsWithDead.Clear();
+                _data._BuildingsWithGarbage.Clear();
+                _data._BuildingsWithFire.Clear();
+                _data._BuildingsWithCrime.Clear();
+                _data._BuildingsWithSick.Clear();
+                _data._BuildingsAbandoned.Clear();
+            }
 
             base.OnReleased();
         }

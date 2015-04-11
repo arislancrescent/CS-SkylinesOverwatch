@@ -164,12 +164,15 @@ namespace SkylinesOverwatch
 
             _helper.HumanMonitorSpun = false;
 
-            _data._Humans.Clear();
+            if (_data != null)
+            {
+                _data._Humans.Clear();
 
-            _data._Residents.Clear();
-            _data._ServicePersons.Clear();
-            _data._Tourists.Clear();
-            _data._HumanOther.Clear();
+                _data._Residents.Clear();
+                _data._ServicePersons.Clear();
+                _data._Tourists.Clear();
+                _data._HumanOther.Clear();
+            }
 
             base.OnReleased();
         }
