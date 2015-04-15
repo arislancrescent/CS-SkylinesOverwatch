@@ -60,6 +60,8 @@
     <Compile Include="Loader.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="VehicleMonitor.cs" />
+    <Compile Include="PrefabMapping.cs" />
+    <Compile Include="AnimalPrefabMapping.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

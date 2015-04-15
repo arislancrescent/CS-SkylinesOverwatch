@@ -16,6 +16,8 @@ namespace SkylinesOverwatch
         private Helper _helper;
         private Data _data;
 
+        private AnimalPrefabMapping _mapping;
+
         private Dictionary<ushort, HashSet<ushort>> _buildingsAnimals;
 
         private bool _initialized;
@@ -27,8 +29,7 @@ namespace SkylinesOverwatch
 
         private CitizenInstance _animal;
         private ushort _id;
-        private HashSet<Type> _types;
-        private Dictionary<string, int> _prefabs;
+        private List<HashSet<ushort>> _categories;
 
         public override void OnCreated(IThreading threading)
         {
@@ -93,6 +94,8 @@ namespace SkylinesOverwatch
                 {
                     _data = Data.Instance;
 
+                    _mapping = new AnimalPrefabMapping();
+
                     _buildingsAnimals = new Dictionary<ushort, HashSet<ushort>>();
 
                     _paused = false;
@@ -101,10 +104,6 @@ namespace SkylinesOverwatch
                     _capacity = _instance.m_instances.m_buffer.Length;
 
                     _id = (ushort)_capacity;
-                    _types = new HashSet<Type>();
-                    _prefabs = new Dictionary<string, int>();
-
-                    LoadPrefabs();
 
                     for (int i = 0; i < _capacity; i++)
                         UpdateAnimal((ushort)i);
@@ -203,30 +202,6 @@ namespace SkylinesOverwatch
             base.OnReleased();
         }
 
-        private void LoadPrefabs()
-        {
-            for (uint i = 0; i < PrefabCollection<CitizenInfo>.PrefabCount(); i++)
-            {
-                CitizenInfo prefab = PrefabCollection<CitizenInfo>.GetPrefab(i);
-
-                if (prefab == null)
-                    continue;
-
-                string name = prefab.GetLocalizedTitle();
-
-                if (String.IsNullOrEmpty(name))
-                    continue;
-
-                if (!_settings.Animals.Contains(name))
-                    continue;
-
-                if (_prefabs.ContainsKey(name))
-                    continue;
-
-                _prefabs.Add(name, (int)i);
-            }
-        }
-
         private void AddBuildingsAnimal(ushort building, ushort animal)
         {
             if (!_buildingsAnimals.ContainsKey(building))
@@ -286,8 +261,9 @@ namespace SkylinesOverwatch
             _buildingsAnimals.Remove(building);
         }
 
-        private bool GetAnimal()
+        private bool UpdateAnimal(ushort id)
         {
+            _id = id;
             _animal = _instance.m_instances.m_buffer[(int)_id];
 
             if (_animal.Info == null)
@@ -302,63 +278,15 @@ namespace SkylinesOverwatch
             if (float.IsNegativeInfinity(_animal.Info.m_maxRenderDistance))
                 return false;
 
-            _types.Clear();
-            _types.Add(_helper.AiType.CitizenAI);
+            _categories = _mapping.GetMapping(_animal.Info);
 
-            Type t = _animal.Info.m_citizenAI.GetType();
-
-            while (!_types.Contains(t))
-            {
-                _types.Add(t);
-
-                t = t.BaseType;
-            }
-
-            return true;
-        }
-
-        private bool UpdateAnimal(ushort id)
-        {
-            _id = id;
-
-            if (!GetAnimal())
+            if (_categories.Count == 0)
                 return false;
 
-            _data._Animals.Add(_id);
+            foreach (HashSet<ushort> category in _mapping.GetMapping(_animal.Info))
+                category.Add(_id);
 
-            if (_settings.Enable._Birds          && CheckBird())
-            {
-                if (CheckSeagull()) return true;
-
-                return true;
-            }
-            if (_settings.Enable._Livestocks     && CheckLivestock())
-            {
-                if (CheckCow()) return true;
-                if (CheckPig()) return true;
-
-                return true;
-            }
-            if (_settings.Enable._Pets           && CheckPet())
-            {
-                if (CheckDog()) return true;
-
-                return true;
-            }
-            if (_settings.Enable._Wildlife       && CheckWildlife())
-            {
-                if (CheckWolf()) return true;
-                if (CheckBear()) return true;
-                if (CheckMoose()) return true;
-
-                return true;
-            }
-            if (_settings.Enable._AnimalOther	 && CheckAnimalOther())
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         internal void RequestRemoval(ushort id)
@@ -395,101 +323,6 @@ namespace SkylinesOverwatch
             _data._AnimalOther.Remove(id);
         }
 
-        private bool Check(Type aiType, HashSet<ushort> category)
-        {
-            if (_types.Contains(aiType))
-            {
-                category.Add(_id);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        private bool Check(string name, HashSet<ushort> category)
-        {
-            if (!_prefabs.ContainsKey(name))
-                return false;
-
-            if (_animal.Info.m_prefabDataIndex == _prefabs[name])
-            {
-                category.Add(_id);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        #region Animals
-
-        private bool CheckAnimal()
-        {
-            return Check(_helper.AiType.AnimalAI, _data._Animals);
-        }
-
-        private bool CheckBird()
-        {
-            return Check(_helper.AiType.BirdAI, _data._Birds);
-        }
-
-        private bool CheckSeagull()
-        {
-            return Check("Seagull", _data._Seagulls);
-        }
-
-        private bool CheckLivestock()
-        {
-            return Check(_helper.AiType.LivestockAI, _data._Livestocks);
-        }
-
-        private bool CheckCow()
-        {
-            return Check("Cow", _data._Cows);
-        }
-
-        private bool CheckPig()
-        {
-            return Check("Pig", _data._Pigs);
-        }
-
-        private bool CheckPet()
-        {
-            return Check(_helper.AiType.PetAI, _data._Pets);
-        }
-
-        private bool CheckDog()
-        {
-            return Check("Dog", _data._Dogs);
-        }
-
-        private bool CheckWildlife()
-        {
-            return Check(_helper.AiType.WildlifeAI, _data._Wildlife);
-        }
-
-        private bool CheckWolf()
-        {
-            return Check("Wolf", _data._Wolves);
-        }
-
-        private bool CheckBear()
-        {
-            return Check("Bear", _data._Bears);
-        }
-
-        private bool CheckMoose()
-        {
-            return Check("Moose", _data._Moose);
-        }
-
-        private bool CheckAnimalOther()
-        {
-            _data._AnimalOther.Add(_id);
-            return true;
-        }
-
-        #endregion
-
         private void OutputDebugLog()
         {
             if (!_helper.AnimalMonitorSpun) return;
@@ -511,43 +344,23 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._AnimalsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._AnimalsRemoved.Count);
             log += "\r\n";
-
-            if (_settings.Enable._Birds)
-            {
-                log += String.Format("{0}   BirdAI\r\n", _data._Birds.Count);
-                log += String.Format(" =>   {0}   Seagull(s)\r\n", _data._Seagulls.Count);
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._Livestocks)
-            {
-                log += String.Format("{0}   LivestockAI\r\n", _data._Livestocks.Count);
-                log += String.Format(" =>   {0}   Cow(s)\r\n", _data._Cows.Count);
-                log += String.Format(" =>   {0}   Pig(s)\r\n", _data._Pigs.Count);
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._Pets)
-            {
-                log += String.Format("{0}   PetAI\r\n", _data._Pets.Count);
-                log += String.Format(" =>   {0}   Dog(s)\r\n", _data._Dogs.Count);
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._Wildlife)
-            {
-                log += String.Format("{0}   WildlifeAI\r\n", _data._Wildlife.Count);
-                log += String.Format(" =>   {0}   Wolf(s)\r\n", _data._Wolves.Count);
-                log += String.Format(" =>   {0}   Bear(s)\r\n", _data._Bears.Count);
-                log += String.Format(" =>   {0}   Moose\r\n", _data._Moose.Count);
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._AnimalOther)
-            {
-                log += String.Format("{0}   Other\r\n", _data._AnimalOther.Count);
-                log += "\r\n";
-            }
+            log += String.Format("{0}   BirdAI\r\n", _data._Birds.Count);
+            log += String.Format(" =>   {0}   Seagull(s)\r\n", _data._Seagulls.Count);
+            log += "\r\n";
+            log += String.Format("{0}   LivestockAI\r\n", _data._Livestocks.Count);
+            log += String.Format(" =>   {0}   Cow(s)\r\n", _data._Cows.Count);
+            log += String.Format(" =>   {0}   Pig(s)\r\n", _data._Pigs.Count);
+            log += "\r\n";
+            log += String.Format("{0}   PetAI\r\n", _data._Pets.Count);
+            log += String.Format(" =>   {0}   Dog(s)\r\n", _data._Dogs.Count);
+            log += "\r\n";
+            log += String.Format("{0}   WildlifeAI\r\n", _data._Wildlife.Count);
+            log += String.Format(" =>   {0}   Wolf(s)\r\n", _data._Wolves.Count);
+            log += String.Format(" =>   {0}   Bear(s)\r\n", _data._Bears.Count);
+            log += String.Format(" =>   {0}   Moose\r\n", _data._Moose.Count);
+            log += "\r\n";
+            log += String.Format("{0}   Other\r\n", _data._AnimalOther.Count);
+            log += "\r\n";
 
             _helper.Log(log);
 
