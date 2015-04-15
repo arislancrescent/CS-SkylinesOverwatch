@@ -110,6 +110,14 @@ namespace SkylinesOverwatch
         internal bool HumanMonitorSpinnable     { get { return GameLoaded; } }
         internal bool AnimalMonitorSpinnable    { get { return BuildingMonitorSpun; } }
 
+        internal AnimalMonitor AnimalMonitor;
+
+        public void RequestAnimalRemoval(ushort id)
+        {
+            if (AnimalMonitor != null)
+                AnimalMonitor.RequestRemoval(id);
+        }
+
         internal struct AiTypes
         {
             // Buildings

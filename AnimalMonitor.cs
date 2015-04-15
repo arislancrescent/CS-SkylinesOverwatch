@@ -111,6 +111,7 @@ namespace SkylinesOverwatch
 
                     _initialized = true;
                     _helper.AnimalMonitorSpun = true;
+                    _helper.AnimalMonitor = this;
 
                     _helper.Log("Animal monitor initialized");
                 }
@@ -119,7 +120,7 @@ namespace SkylinesOverwatch
                     _data._AnimalsUpdated.Clear();
                     _data._AnimalsRemoved.Clear();
 
-                    foreach (ushort building in _data.BuildingsUpdated)
+                    foreach (ushort building in _data._BuildingsUpdated)
                     {
                         ushort id = Singleton<BuildingManager>.instance.m_buildings.m_buffer[building].m_targetCitizens;
 
@@ -144,7 +145,7 @@ namespace SkylinesOverwatch
                         CheckBuildingsAnimals(building);
                     }
 
-                    foreach (ushort building in _data.BuildingsRemoved)
+                    foreach (ushort building in _data._BuildingsRemoved)
                         RemoveBuildingsAnimals(building);
                 }
 
@@ -175,6 +176,7 @@ namespace SkylinesOverwatch
             _paused = false;
 
             _helper.AnimalMonitorSpun = false;
+            _helper.AnimalMonitor = null;
 
             if (_data != null)
             {
@@ -354,6 +356,17 @@ namespace SkylinesOverwatch
             }
 
             return false;
+        }
+
+        internal void RequestRemoval(ushort id)
+        {
+            CitizenInstance animal = _instance.m_instances.m_buffer[(int)id];
+
+            bool isCreated = (animal.m_flags & CitizenInstance.Flags.Created) != CitizenInstance.Flags.None;
+            bool isAnimal = animal.Info != null && animal.Info.m_citizenAI.IsAnimal();
+
+            if (!isCreated || !isAnimal)
+                RemoveAnimal(id);
         }
 
         private void RemoveAnimal(ushort id)
