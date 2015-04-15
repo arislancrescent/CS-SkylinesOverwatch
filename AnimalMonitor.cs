@@ -299,6 +299,9 @@ namespace SkylinesOverwatch
             if ((_animal.m_flags & CitizenInstance.Flags.Created) == CitizenInstance.Flags.None)
                 return false;
 
+            if (float.IsNegativeInfinity(_animal.Info.m_maxRenderDistance))
+                return false;
+                
             _types.Clear();
             _types.Add(_helper.AiType.CitizenAI);
 
@@ -364,9 +367,19 @@ namespace SkylinesOverwatch
 
             bool isCreated = (animal.m_flags & CitizenInstance.Flags.Created) != CitizenInstance.Flags.None;
             bool isAnimal = animal.Info != null && animal.Info.m_citizenAI.IsAnimal();
+            bool isHidden = float.IsNegativeInfinity(animal.Info.m_maxRenderDistance);
 
-            if (!isCreated || !isAnimal)
+            string log = "Removing... ";
+
+            if (!isCreated || !isAnimal || isHidden)
+            {
                 RemoveAnimal(id);
+                log += " removed";
+            }
+            else
+                log += " failed";
+
+            _helper.Log(log);
         }
 
         private void RemoveAnimal(ushort id)
