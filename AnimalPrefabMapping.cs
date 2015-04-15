@@ -84,7 +84,7 @@ namespace SkylinesOverwatch
                 }
                 else if (ai is LivestockAI)
                 {
-                    _mapping.AddMapping(prefabID, _data._Livestocks);
+                    _mapping.AddMapping(prefabID, _data._Livestock);
 
                     if (_prefabs.ContainsKey("Cow") && _prefabs["Cow"] == prefabID)
                         _mapping.AddMapping(prefabID, _data._Cows);

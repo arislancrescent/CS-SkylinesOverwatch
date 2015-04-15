@@ -184,7 +184,7 @@ namespace SkylinesOverwatch
                 _data._Birds.Clear();
                 _data._Seagulls.Clear();
 
-                _data._Livestocks.Clear();
+                _data._Livestock.Clear();
                 _data._Cows.Clear();
                 _data._Pigs.Clear();
 
@@ -308,7 +308,7 @@ namespace SkylinesOverwatch
             _data._Birds.Remove(id);
             _data._Seagulls.Remove(id);
 
-            _data._Livestocks.Remove(id);
+            _data._Livestock.Remove(id);
             _data._Cows.Remove(id);
             _data._Pigs.Remove(id);
 
@@ -344,17 +344,17 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._AnimalsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._AnimalsRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   BirdAI\r\n", _data._Birds.Count);
+            log += String.Format("{0}   Bird(s)\r\n", _data._Birds.Count);
             log += String.Format(" =>   {0}   Seagull(s)\r\n", _data._Seagulls.Count);
             log += "\r\n";
-            log += String.Format("{0}   LivestockAI\r\n", _data._Livestocks.Count);
+            log += String.Format("{0}   Livestock\r\n", _data._Livestock.Count);
             log += String.Format(" =>   {0}   Cow(s)\r\n", _data._Cows.Count);
             log += String.Format(" =>   {0}   Pig(s)\r\n", _data._Pigs.Count);
             log += "\r\n";
-            log += String.Format("{0}   PetAI\r\n", _data._Pets.Count);
+            log += String.Format("{0}   Pet(s)\r\n", _data._Pets.Count);
             log += String.Format(" =>   {0}   Dog(s)\r\n", _data._Dogs.Count);
             log += "\r\n";
-            log += String.Format("{0}   WildlifeAI\r\n", _data._Wildlife.Count);
+            log += String.Format("{0}   Wildlife\r\n", _data._Wildlife.Count);
             log += String.Format(" =>   {0}   Wolf(s)\r\n", _data._Wolves.Count);
             log += String.Format(" =>   {0}   Bear(s)\r\n", _data._Bears.Count);
             log += String.Format(" =>   {0}   Moose\r\n", _data._Moose.Count);

@@ -62,12 +62,6 @@ namespace SkylinesOverwatch
             AiType.ResidentAI               = typeof(ResidentAI);
             AiType.ServicePersonAI          = typeof(ServicePersonAI);
             AiType.TouristAI                = typeof(TouristAI);
-
-            AiType.AnimalAI                 = typeof(AnimalAI);
-            AiType.BirdAI                   = typeof(BirdAI);
-            AiType.LivestockAI              = typeof(LivestockAI);
-            AiType.PetAI                    = typeof(PetAI);
-            AiType.WildlifeAI               = typeof(WildlifeAI);
         }
 
         private static readonly Helper _Instance = new Helper();
@@ -160,12 +154,6 @@ namespace SkylinesOverwatch
             public Type ResidentAI;
             public Type ServicePersonAI;
             public Type TouristAI;
-
-            public Type AnimalAI;
-            public Type BirdAI;
-            public Type LivestockAI;
-            public Type PetAI;
-            public Type WildlifeAI;
         }
 
         internal void Log(string message)

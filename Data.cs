@@ -72,7 +72,7 @@ namespace SkylinesOverwatch
             _Birds                   = new HashSet<ushort>();
             _Seagulls                = new HashSet<ushort>();
 
-            _Livestocks              = new HashSet<ushort>();
+            _Livestock               = new HashSet<ushort>();
             _Cows                    = new HashSet<ushort>();
             _Pigs                    = new HashSet<ushort>();
 
@@ -155,7 +155,7 @@ namespace SkylinesOverwatch
         internal HashSet<ushort> _Birds;
         internal HashSet<ushort> _Seagulls;
 
-        internal HashSet<ushort> _Livestocks;
+        internal HashSet<ushort> _Livestock;
         internal HashSet<ushort> _Cows;
         internal HashSet<ushort> _Pigs;
 
@@ -231,7 +231,7 @@ namespace SkylinesOverwatch
         public ushort[] Birds                   { get { return _Birds.ToArray<ushort>(); } }
         public ushort[] Seagulls                { get { return _Seagulls.ToArray<ushort>(); } }
 
-        public ushort[] Livestocks              { get { return _Livestocks.ToArray<ushort>(); } }
+        public ushort[] Livestock               { get { return _Livestock.ToArray<ushort>(); } }
         public ushort[] Cows                    { get { return _Cows.ToArray<ushort>(); } }
         public ushort[] Pigs                    { get { return _Pigs.ToArray<ushort>(); } }
 

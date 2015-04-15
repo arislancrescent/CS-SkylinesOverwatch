@@ -72,12 +72,6 @@ namespace SkylinesOverwatch
             Enable._HumanOther              = false;
 
             Enable._AnimalMonitor           = false;
-
-            Enable._Birds                   = false;
-            Enable._Livestocks              = false;
-            Enable._Pets                    = false;
-            Enable._Wildlife                = false;
-            Enable._AnimalOther             = false;
         }
 
         private static readonly Settings _Instance = new Settings();
@@ -171,12 +165,6 @@ namespace SkylinesOverwatch
             internal bool _HumanOther;
 
             internal bool _AnimalMonitor;
-
-            internal bool _Birds;
-            internal bool _Livestocks;
-            internal bool _Pets;
-            internal bool _Wildlife;
-            internal bool _AnimalOther;
 
             public bool BuildingMonitor
             {
@@ -417,36 +405,6 @@ namespace SkylinesOverwatch
                         _AnimalMonitor = value;
                     }
                 }
-            }
-
-            public bool Birds
-            {
-                get { return _Birds; }
-                set { if (value) _Birds = value; }
-            }
-
-            public bool Livestocks
-            {
-                get { return _Livestocks; }
-                set { if (value) _Livestocks = value; }
-            }
-
-            public bool Pets
-            {
-                get { return _Pets; }
-                set { if (value) _Pets = value; }
-            }
-
-            public bool Wildlife
-            {
-                get { return _Wildlife; }
-                set { if (value) _Wildlife = value; }
-            }
-
-            public bool AnimalOther
-            {
-                get { return _AnimalOther; }
-                set { if (value) _AnimalOther = value; }
             }
         }
     }
