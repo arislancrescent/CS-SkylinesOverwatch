@@ -406,19 +406,38 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._VehiclesUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._VehiclesRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   CarAI\r\n", _data._Cars.Count);
-            log += String.Format(" =>   {0}   HearseAI\r\n", _data._Hearses.Count);
-            log += String.Format(" =>   {0}   GarbageTruckAI\r\n", _data._GarbageTrucks.Count);
-            log += String.Format(" =>   {0}   FireTruckAI\r\n", _data._FireTrucks.Count);
-            log += String.Format(" =>   {0}   PoliceCarAI\r\n", _data._PoliceCars.Count);
-            log += String.Format(" =>   {0}   AmbulanceAI\r\n", _data._Ambulances.Count);
-            log += String.Format(" =>   {0}   BusAI\r\n", _data._Buses.Count);
-            log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
-            log += "\r\n";
-            log += String.Format("{0}   TrainAI\r\n", _data._Trains.Count);
-            log += String.Format("{0}   AircraftAI\r\n", _data._Aircrafts.Count);
-            log += String.Format("{0}   ShipAI\r\n", _data._Ships.Count);
-            log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
+
+            if (_settings.Enable._Cars)
+            {
+                log += String.Format("{0}   CarAI\r\n", _data._Cars.Count);
+
+                if (_settings.Enable._Hearses)
+                    log += String.Format(" =>   {0}   HearseAI\r\n", _data._Hearses.Count);
+                if (_settings.Enable._GarbageTrucks)
+                    log += String.Format(" =>   {0}   GarbageTruckAI\r\n", _data._GarbageTrucks.Count);
+                if (_settings.Enable._FireTrucks)
+                    log += String.Format(" =>   {0}   FireTruckAI\r\n", _data._FireTrucks.Count);
+                if (_settings.Enable._PoliceCars)
+                    log += String.Format(" =>   {0}   PoliceCarAI\r\n", _data._PoliceCars.Count);
+                if (_settings.Enable._Ambulances)
+                    log += String.Format(" =>   {0}   AmbulanceAI\r\n", _data._Ambulances.Count);
+                if (_settings.Enable._Buses)
+                    log += String.Format(" =>   {0}   BusAI\r\n", _data._Buses.Count);
+                if (_settings.Enable._CarOther)
+                    log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
+
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._Trains)
+                log += String.Format("{0}   TrainAI\r\n", _data._Trains.Count);
+            if (_settings.Enable._Aircrafts)
+                log += String.Format("{0}   AircraftAI\r\n", _data._Aircrafts.Count);
+            if (_settings.Enable._Ships)
+                log += String.Format("{0}   ShipAI\r\n", _data._Ships.Count);
+            if (_settings.Enable._VehicleOther)
+                log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
+
             log += "\r\n";
 
             _helper.Log(log);

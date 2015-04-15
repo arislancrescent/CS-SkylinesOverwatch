@@ -573,27 +573,58 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._BuildingsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._BuildingsRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   PlayerBuildingAI\r\n", _data._PlayerBuildings.Count);
-            log += String.Format(" =>   {0}   CemeteryAI\r\n", _data._Cemeteries.Count);
-            log += String.Format(" =>   {0}   LandfillSiteAI\r\n", _data._LandfillSites.Count);
-            log += String.Format(" =>   {0}   FireStationAI\r\n", _data._FireStations.Count);
-            log += String.Format(" =>   {0}   PoliceStationAI\r\n", _data._PoliceStations.Count);
-            log += String.Format(" =>   {0}   HospitalAI\r\n", _data._Hospitals.Count);
-            log += String.Format(" =>   {0}   ParkAI\r\n", _data._Parks.Count);
-            log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
-            log += "\r\n";
-            log += String.Format("{0}   PrivateBuildingAI\r\n", _data._PrivateBuildings.Count);
-            log += String.Format(" =>   {0}   ResidentialBuildingAI\r\n", _data._ResidentialBuildings.Count);
-            log += String.Format(" =>   {0}   CommercialBuildingAI\r\n", _data._CommercialBuildings.Count);
-            log += String.Format(" =>   {0}   IndustrialBuildingAI\r\n", _data._IndustrialBuildings.Count);
-            log += String.Format(" =>   {0}   OfficeBuildingAI\r\n", _data._OfficeBuildings.Count);
-            log += String.Format(" =>   {0}   Other\r\n", _data._PrivateOther.Count);
-            log += "\r\n";
-            log += String.Format("{0}   w/Death\r\n", _data._BuildingsWithDead.Count);
-            log += String.Format("{0}   w/Garbage\r\n", _data._BuildingsWithGarbage.Count);
-            log += String.Format("{0}   w/Fire\r\n", _data._BuildingsWithFire.Count);
-            log += String.Format("{0}   w/Crime\r\n", _data._BuildingsWithCrime.Count);
-            log += String.Format("{0}   w/Illness\r\n", _data._BuildingsWithSick.Count);
+
+            if (_settings.Enable._PlayerBuildings)
+            {
+                log += String.Format("{0}   PlayerBuildingAI\r\n", _data._PlayerBuildings.Count);
+
+                if (_settings.Enable._Cemeteries)
+                    log += String.Format(" =>   {0}   CemeteryAI\r\n", _data._Cemeteries.Count);
+                if (_settings.Enable._LandfillSites)
+                    log += String.Format(" =>   {0}   LandfillSiteAI\r\n", _data._LandfillSites.Count);
+                if (_settings.Enable._FireStations)
+                    log += String.Format(" =>   {0}   FireStationAI\r\n", _data._FireStations.Count);
+                if (_settings.Enable._PoliceStations)
+                    log += String.Format(" =>   {0}   PoliceStationAI\r\n", _data._PoliceStations.Count);
+                if (_settings.Enable._Hospitals)
+                    log += String.Format(" =>   {0}   HospitalAI\r\n", _data._Hospitals.Count);
+                if (_settings.Enable._Parks)
+                    log += String.Format(" =>   {0}   ParkAI\r\n", _data._Parks.Count);
+                if (_settings.Enable._PlayerOther)
+                    log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
+
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._PrivateBuildings)
+            {
+                log += String.Format("{0}   PrivateBuildingAI\r\n", _data._PrivateBuildings.Count);
+
+                if (_settings.Enable._ResidentialBuildings)
+                    log += String.Format(" =>   {0}   ResidentialBuildingAI\r\n", _data._ResidentialBuildings.Count);
+                if (_settings.Enable._CommercialBuildings)
+                    log += String.Format(" =>   {0}   CommercialBuildingAI\r\n", _data._CommercialBuildings.Count);
+                if (_settings.Enable._IndustrialBuildings)
+                    log += String.Format(" =>   {0}   IndustrialBuildingAI\r\n", _data._IndustrialBuildings.Count);
+                if (_settings.Enable._OfficeBuildings)
+                    log += String.Format(" =>   {0}   OfficeBuildingAI\r\n", _data._OfficeBuildings.Count);
+                if (_settings.Enable._PrivateOther)
+                    log += String.Format(" =>   {0}   Other\r\n", _data._PrivateOther.Count);
+
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._DeadStatus)
+                log += String.Format("{0}   w/Death\r\n", _data._BuildingsWithDead.Count);
+            if (_settings.Enable._GarbageStatus)
+                log += String.Format("{0}   w/Garbage\r\n", _data._BuildingsWithGarbage.Count);
+            if (_settings.Enable._FireStatus)
+                log += String.Format("{0}   w/Fire\r\n", _data._BuildingsWithFire.Count);
+            if (_settings.Enable._CrimeStatus)
+                log += String.Format("{0}   w/Crime\r\n", _data._BuildingsWithCrime.Count);
+            if (_settings.Enable._SickStatus)
+                log += String.Format("{0}   w/Illness\r\n", _data._BuildingsWithSick.Count);
+
             log += String.Format("{0}   Abandoned\r\n", _data._BuildingsAbandoned.Count);
             log += "\r\n";
 

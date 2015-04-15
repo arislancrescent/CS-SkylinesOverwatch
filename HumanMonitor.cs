@@ -332,10 +332,16 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._HumansUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._HumansRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   ResidentAI\r\n", _data._Residents.Count);
-            log += String.Format("{0}   ServicePersonAI\r\n", _data._ServicePersons.Count);
-            log += String.Format("{0}   TouristAI\r\n", _data._Tourists.Count);
-            log += String.Format("{0}   Other\r\n", _data._HumanOther.Count);
+
+            if (_settings.Enable._Residents)
+                log += String.Format("{0}   ResidentAI\r\n", _data._Residents.Count);
+            if (_settings.Enable._ServicePersons)
+                log += String.Format("{0}   ServicePersonAI\r\n", _data._ServicePersons.Count);
+            if (_settings.Enable._Tourists)
+                log += String.Format("{0}   TouristAI\r\n", _data._Tourists.Count);
+            if (_settings.Enable._HumanOther)
+                log += String.Format("{0}   Other\r\n", _data._HumanOther.Count);
+
             log += "\r\n";
 
             _helper.Log(log);

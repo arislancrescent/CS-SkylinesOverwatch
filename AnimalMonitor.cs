@@ -301,7 +301,7 @@ namespace SkylinesOverwatch
 
             if (float.IsNegativeInfinity(_animal.Info.m_maxRenderDistance))
                 return false;
-                
+
             _types.Clear();
             _types.Add(_helper.AiType.CitizenAI);
 
@@ -369,17 +369,8 @@ namespace SkylinesOverwatch
             bool isAnimal = animal.Info != null && animal.Info.m_citizenAI.IsAnimal();
             bool isHidden = float.IsNegativeInfinity(animal.Info.m_maxRenderDistance);
 
-            string log = "Removing... ";
-
             if (!isCreated || !isAnimal || isHidden)
-            {
                 RemoveAnimal(id);
-                log += " removed";
-            }
-            else
-                log += " failed";
-
-            _helper.Log(log);
         }
 
         private void RemoveAnimal(ushort id)
@@ -520,23 +511,43 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._AnimalsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._AnimalsRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   BirdAI\r\n", _data._Birds.Count);
-            log += String.Format(" =>   {0}   Seagull(s)\r\n", _data._Seagulls.Count);
-            log += "\r\n";
-            log += String.Format("{0}   LivestockAI\r\n", _data._Livestocks.Count);
-            log += String.Format(" =>   {0}   Cow(s)\r\n", _data._Cows.Count);
-            log += String.Format(" =>   {0}   Pig(s)\r\n", _data._Pigs.Count);
-            log += "\r\n";
-            log += String.Format("{0}   PetAI\r\n", _data._Pets.Count);
-            log += String.Format(" =>   {0}   Dog(s)\r\n", _data._Dogs.Count);
-            log += "\r\n";
-            log += String.Format("{0}   WildlifeAI\r\n", _data._Wildlife.Count);
-            log += String.Format(" =>   {0}   Wolf(s)\r\n", _data._Wolves.Count);
-            log += String.Format(" =>   {0}   Bear(s)\r\n", _data._Bears.Count);
-            log += String.Format(" =>   {0}   Moose\r\n", _data._Moose.Count);
-            log += "\r\n";
-            log += String.Format("{0}   Other\r\n", _data._AnimalOther.Count);
-            log += "\r\n";
+
+            if (_settings.Enable._Birds)
+            {
+                log += String.Format("{0}   BirdAI\r\n", _data._Birds.Count);
+                log += String.Format(" =>   {0}   Seagull(s)\r\n", _data._Seagulls.Count);
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._Livestocks)
+            {
+                log += String.Format("{0}   LivestockAI\r\n", _data._Livestocks.Count);
+                log += String.Format(" =>   {0}   Cow(s)\r\n", _data._Cows.Count);
+                log += String.Format(" =>   {0}   Pig(s)\r\n", _data._Pigs.Count);
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._Pets)
+            {
+                log += String.Format("{0}   PetAI\r\n", _data._Pets.Count);
+                log += String.Format(" =>   {0}   Dog(s)\r\n", _data._Dogs.Count);
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._Wildlife)
+            {
+                log += String.Format("{0}   WildlifeAI\r\n", _data._Wildlife.Count);
+                log += String.Format(" =>   {0}   Wolf(s)\r\n", _data._Wolves.Count);
+                log += String.Format(" =>   {0}   Bear(s)\r\n", _data._Bears.Count);
+                log += String.Format(" =>   {0}   Moose\r\n", _data._Moose.Count);
+                log += "\r\n";
+            }
+
+            if (_settings.Enable._AnimalOther)
+            {
+                log += String.Format("{0}   Other\r\n", _data._AnimalOther.Count);
+                log += "\r\n";
+            }
 
             _helper.Log(log);
 
