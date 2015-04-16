@@ -16,6 +16,8 @@ namespace SkylinesOverwatch
         private Helper _helper;
         private Data _data;
 
+        private VehiclePrefabMapping _mapping;
+
         private bool _initialized;
         private bool _terminated;
         private bool _paused;
@@ -26,8 +28,7 @@ namespace SkylinesOverwatch
 
         private Vehicle _vehicle;
         private ushort _id;
-        private HashSet<Type> _types;
-        private bool _isCar;
+        private List<HashSet<ushort>> _categories;
 
         public override void OnCreated(IThreading threading)
         {
@@ -92,16 +93,18 @@ namespace SkylinesOverwatch
                 {
                     _data = Data.Instance;
 
+                    _mapping = new VehiclePrefabMapping();
+
                     _paused = false;
 
                     _instance = Singleton<VehicleManager>.instance;
                     _capacity = _instance.m_vehicles.m_buffer.Length;
 
                     _id = (ushort)_capacity;
-                    _types = new HashSet<Type>();
 
                     _initialized = true;
                     _helper.VehicleMonitorSpun = true;
+                    _helper.VehicleMonitor = this;
 
                     _helper.Log("Vehicle monitor initialized");
                 }
@@ -159,6 +162,7 @@ namespace SkylinesOverwatch
             _paused = false;
 
             _helper.VehicleMonitorSpun = false;
+            _helper.VehicleMonitor = null;
 
             if (_data != null)
             {
@@ -215,27 +219,10 @@ namespace SkylinesOverwatch
         {
             _vehicle = _instance.m_vehicles.m_buffer[(int)_id];
 
-            if ((_vehicle.m_flags & Vehicle.Flags.Spawned) == Vehicle.Flags.None)
-                return false;
-
             if (_vehicle.Info == null)
                 return false;
 
-            _isCar = false;
-
-            _types.Clear();
-            _types.Add(_helper.AiType.VehicleAI);
-
-            Type t = _vehicle.Info.m_vehicleAI.GetType();
-
-            while (!_types.Contains(t))
-            {
-                _types.Add(t);
-
-                t = t.BaseType;
-            }
-
-            if (_types.Contains(_helper.AiType.CarTrailerAI))
+            if ((_vehicle.m_flags & Vehicle.Flags.Spawned) == Vehicle.Flags.None)
                 return false;
 
             return true;
@@ -245,39 +232,28 @@ namespace SkylinesOverwatch
         {
             _id = id;
 
-            if (!GetVehicle() || !CheckVehicle())
+            if (!GetVehicle())
                 return false;
 
-            if (_settings.Enable._Cars               && _isCar)
-            {
-                if (_settings.Enable._Hearses        && CheckHearse())
-                    return true;
-                if (_settings.Enable._GarbageTrucks  && CheckGarbageTruck())
-                    return true;
-                if (_settings.Enable._FireTrucks     && CheckFireTruck())
-                    return true;
-                if (_settings.Enable._PoliceCars     && CheckPoliceCar())
-                    return true;
-                if (_settings.Enable._Ambulances     && CheckAmbulance())
-                    return true;
-                if (_settings.Enable._Buses          && CheckBus())
-                    return true;
-                if (_settings.Enable._CarOther       && CheckCarOther())
-                    return true;
-            }
-            else if (!_isCar)
-            {
-                if (_settings.Enable._Trains         && CheckTrain())
-                    return true;
-                if (_settings.Enable._Aircrafts      && CheckAircraft())
-                    return true;
-                if (_settings.Enable._Ships          && CheckShip())
-                    return true;
-                if (_settings.Enable._VehicleOther   && CheckVehicleOther())
-                    return true;
-            }
+            _categories = _mapping.GetMapping(_vehicle.Info);
 
-            return false;
+            if (_categories.Count == 0)
+                return false;
+
+            foreach (HashSet<ushort> category in _mapping.GetMapping(_vehicle.Info))
+                category.Add(_id);
+
+            return true;
+        }
+
+        internal void RequestRemoval(ushort id)
+        {
+            Vehicle vehicle = _instance.m_vehicles.m_buffer[(int)id];
+
+            bool isCreated = (vehicle.m_flags & Vehicle.Flags.Spawned) == Vehicle.Flags.None;
+
+            if (!isCreated)
+                RemoveVehicle(id);
         }
 
         private void RemoveVehicle(ushort id)
@@ -297,92 +273,6 @@ namespace SkylinesOverwatch
             _data._Ambulances.Remove(id);
             _data._Buses.Remove(id);
             _data._CarOther.Remove(id);
-        }
-
-        private bool Check(Type aiType, HashSet<ushort> category)
-        {
-            if (_types.Contains(aiType))
-            {
-                category.Add(_id);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        private bool CheckVehicle()
-        {
-            _isCar = CheckCar();
-
-            _data._Vehicles.Add(_id);
-
-            return true;
-        }
-
-        #region Cars
-
-        private bool CheckCar()
-        {
-             return Check(_helper.AiType.CarAI, _data._Cars);
-        }
-
-        private bool CheckHearse()
-        {
-            return Check(_helper.AiType.HearseAI, _data._Hearses);
-        }
-
-        private bool CheckGarbageTruck()
-        {
-            return Check(_helper.AiType.GarbageTruckAI, _data._GarbageTrucks);
-        }
-
-        private bool CheckFireTruck()
-        {
-            return Check(_helper.AiType.FireTruckAI, _data._FireTrucks);
-        }
-
-        private bool CheckPoliceCar()
-        {
-            return Check(_helper.AiType.PoliceCarAI, _data._PoliceCars);
-        }
-
-        private bool CheckAmbulance()
-        {
-            return Check(_helper.AiType.AmbulanceAI, _data._Ambulances);
-        }
-
-        private bool CheckBus()
-        {
-            return Check(_helper.AiType.BusAI, _data._Buses);
-        }
-
-        private bool CheckCarOther()
-        {
-            _data._CarOther.Add(_id);
-            return true;
-        }
-
-        #endregion
-
-        private bool CheckTrain()
-        {
-            return Check(_helper.AiType.TrainAI, _data._Trains);
-        }
-
-        private bool CheckAircraft()
-        {
-            return Check(_helper.AiType.AircraftAI, _data._Aircrafts);
-        }
-
-        private bool CheckShip()
-        {
-            return Check(_helper.AiType.ShipAI, _data._Ships);
-        }
-
-        private bool CheckVehicleOther()
-        {
-            _data._VehicleOther.Add(_id);
-            return true;
         }
 
         private void OutputDebugLog()
@@ -406,38 +296,19 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._VehiclesUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._VehiclesRemoved.Count);
             log += "\r\n";
-
-            if (_settings.Enable._Cars)
-            {
-                log += String.Format("{0}   CarAI\r\n", _data._Cars.Count);
-
-                if (_settings.Enable._Hearses)
-                    log += String.Format(" =>   {0}   HearseAI\r\n", _data._Hearses.Count);
-                if (_settings.Enable._GarbageTrucks)
-                    log += String.Format(" =>   {0}   GarbageTruckAI\r\n", _data._GarbageTrucks.Count);
-                if (_settings.Enable._FireTrucks)
-                    log += String.Format(" =>   {0}   FireTruckAI\r\n", _data._FireTrucks.Count);
-                if (_settings.Enable._PoliceCars)
-                    log += String.Format(" =>   {0}   PoliceCarAI\r\n", _data._PoliceCars.Count);
-                if (_settings.Enable._Ambulances)
-                    log += String.Format(" =>   {0}   AmbulanceAI\r\n", _data._Ambulances.Count);
-                if (_settings.Enable._Buses)
-                    log += String.Format(" =>   {0}   BusAI\r\n", _data._Buses.Count);
-                if (_settings.Enable._CarOther)
-                    log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
-
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._Trains)
-                log += String.Format("{0}   TrainAI\r\n", _data._Trains.Count);
-            if (_settings.Enable._Aircrafts)
-                log += String.Format("{0}   AircraftAI\r\n", _data._Aircrafts.Count);
-            if (_settings.Enable._Ships)
-                log += String.Format("{0}   ShipAI\r\n", _data._Ships.Count);
-            if (_settings.Enable._VehicleOther)
-                log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
-
+            log += String.Format("{0}   CarAI\r\n", _data._Cars.Count);
+            log += String.Format(" =>   {0}   HearseAI\r\n", _data._Hearses.Count);
+            log += String.Format(" =>   {0}   GarbageTruckAI\r\n", _data._GarbageTrucks.Count);
+            log += String.Format(" =>   {0}   FireTruckAI\r\n", _data._FireTrucks.Count);
+            log += String.Format(" =>   {0}   PoliceCarAI\r\n", _data._PoliceCars.Count);
+            log += String.Format(" =>   {0}   AmbulanceAI\r\n", _data._Ambulances.Count);
+            log += String.Format(" =>   {0}   BusAI\r\n", _data._Buses.Count);
+            log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
+            log += "\r\n";
+            log += String.Format("{0}   TrainAI\r\n", _data._Trains.Count);
+            log += String.Format("{0}   AircraftAI\r\n", _data._Aircrafts.Count);
+            log += String.Format("{0}   ShipAI\r\n", _data._Ships.Count);
+            log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
             log += "\r\n";
 
             _helper.Log(log);

@@ -63,6 +63,7 @@
     <Compile Include="PrefabMapping.cs" />
     <Compile Include="AnimalPrefabMapping.cs" />
     <Compile Include="BuildingPrefabMapping.cs" />
+    <Compile Include="VehiclePrefabMapping.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,22 +23,6 @@ namespace SkylinesOverwatch
             _HumanMonitorSpun               = false;
             _AnimalMonitorSpun              = false;
 
-            // Vehicles
-            AiType.VehicleAI                = typeof(VehicleAI);
-
-            AiType.CarAI                    = typeof(CarAI);
-            AiType.TrainAI                  = typeof(TrainAI);
-            AiType.AircraftAI               = typeof(AircraftAI);
-            AiType.ShipAI                   = typeof(ShipAI);
-
-            AiType.CarTrailerAI             = typeof(CarTrailerAI);
-            AiType.HearseAI                 = typeof(HearseAI);
-            AiType.GarbageTruckAI           = typeof(GarbageTruckAI);
-            AiType.FireTruckAI              = typeof(FireTruckAI);
-            AiType.PoliceCarAI              = typeof(PoliceCarAI);
-            AiType.AmbulanceAI              = typeof(AmbulanceAI);
-            AiType.BusAI                    = typeof(BusAI);
-
             // Citizens
             AiType.CitizenAI                = typeof(CitizenAI);
 
@@ -89,12 +73,19 @@ namespace SkylinesOverwatch
         internal bool AnimalMonitorSpinnable    { get { return BuildingMonitorSpun; } }
 
         internal BuildingMonitor BuildingMonitor;
+        internal VehicleMonitor VehicleMonitor;
         internal AnimalMonitor AnimalMonitor;
 
         public void RequestBuildingRemoval(ushort id)
         {
             if (BuildingMonitor != null)
                 BuildingMonitor.RequestRemoval(id);
+        }
+
+        public void RequestVehicleRemoval(ushort id)
+        {
+            if (VehicleMonitor != null)
+                VehicleMonitor.RequestRemoval(id);
         }
 
         public void RequestAnimalRemoval(ushort id)
@@ -105,22 +96,6 @@ namespace SkylinesOverwatch
 
         internal struct AiTypes
         {
-            // Vehicles
-            public Type VehicleAI;
-
-            public Type CarAI;
-            public Type TrainAI;
-            public Type AircraftAI;
-            public Type ShipAI;
-
-            public Type CarTrailerAI;
-            public Type HearseAI;
-            public Type GarbageTruckAI;
-            public Type FireTruckAI;
-            public Type PoliceCarAI;
-            public Type AmbulanceAI;
-            public Type BusAI;
-
             // Citizens
             public Type CitizenAI;
 
