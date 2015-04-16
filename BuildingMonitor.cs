@@ -329,11 +329,9 @@ namespace SkylinesOverwatch
 
         internal void RequestRemoval(ushort id)
         {
-            Building building = _instance.m_buildings.m_buffer[(int)id];
+            _id = id;
 
-            bool isCreated = (building.m_flags & Building.Flags.Created) == Building.Flags.None;
-
-            if (!isCreated)
+            if (!GetBuilding())
                 RemoveBuilding(id);
         }
 
@@ -446,7 +444,7 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._BuildingsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._BuildingsRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   PlayerBuilding(s)\r\n", _data._PlayerBuildings.Count);
+            log += String.Format("{0}   Player Building(s)\r\n", _data._PlayerBuildings.Count);
             log += String.Format(" =>   {0}   Cemetery(s)\r\n", _data._Cemeteries.Count);
             log += String.Format(" =>   {0}   LandfillSite(s)\r\n", _data._LandfillSites.Count);
             log += String.Format(" =>   {0}   FireStation(s)\r\n", _data._FireStations.Count);
@@ -455,11 +453,11 @@ namespace SkylinesOverwatch
             log += String.Format(" =>   {0}   Park(s)\r\n", _data._Parks.Count);
             log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
             log += "\r\n";
-            log += String.Format("{0}   PrivateBuilding(s)\r\n", _data._PrivateBuildings.Count);
-            log += String.Format(" =>   {0}   ResidentialBuilding(s)\r\n", _data._ResidentialBuildings.Count);
-            log += String.Format(" =>   {0}   CommercialBuilding(s)\r\n", _data._CommercialBuildings.Count);
-            log += String.Format(" =>   {0}   IndustrialBuilding(s)\r\n", _data._IndustrialBuildings.Count);
-            log += String.Format(" =>   {0}   OfficeBuilding(s)\r\n", _data._OfficeBuildings.Count);
+            log += String.Format("{0}   Private Building(s)\r\n", _data._PrivateBuildings.Count);
+            log += String.Format(" =>   {0}   Residential\r\n", _data._ResidentialBuildings.Count);
+            log += String.Format(" =>   {0}   Commercial\r\n", _data._CommercialBuildings.Count);
+            log += String.Format(" =>   {0}   Industrial\r\n", _data._IndustrialBuildings.Count);
+            log += String.Format(" =>   {0}   Office(s)\r\n", _data._OfficeBuildings.Count);
             log += String.Format(" =>   {0}   Other\r\n", _data._PrivateOther.Count);
             log += "\r\n";
             log += String.Format("{0}   Other Building(s)\r\n", _data._BuildingOther.Count);

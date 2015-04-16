@@ -170,7 +170,7 @@ namespace SkylinesOverwatch
 
                 _data._Cars.Clear();
                 _data._Trains.Clear();
-                _data._Aircrafts.Clear();
+                _data._Aircraft.Clear();
                 _data._Ships.Clear();
                 _data._VehicleOther.Clear();
 
@@ -248,11 +248,9 @@ namespace SkylinesOverwatch
 
         internal void RequestRemoval(ushort id)
         {
-            Vehicle vehicle = _instance.m_vehicles.m_buffer[(int)id];
+            _id = id;
 
-            bool isCreated = (vehicle.m_flags & Vehicle.Flags.Spawned) == Vehicle.Flags.None;
-
-            if (!isCreated)
+            if (!GetVehicle())
                 RemoveVehicle(id);
         }
 
@@ -262,7 +260,7 @@ namespace SkylinesOverwatch
 
             _data._Cars.Remove(id);
             _data._Trains.Remove(id);
-            _data._Aircrafts.Remove(id);
+            _data._Aircraft.Remove(id);
             _data._Ships.Remove(id);
             _data._VehicleOther.Remove(id);
 
@@ -296,18 +294,18 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._VehiclesUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._VehiclesRemoved.Count);
             log += "\r\n";
-            log += String.Format("{0}   CarAI\r\n", _data._Cars.Count);
-            log += String.Format(" =>   {0}   HearseAI\r\n", _data._Hearses.Count);
-            log += String.Format(" =>   {0}   GarbageTruckAI\r\n", _data._GarbageTrucks.Count);
-            log += String.Format(" =>   {0}   FireTruckAI\r\n", _data._FireTrucks.Count);
-            log += String.Format(" =>   {0}   PoliceCarAI\r\n", _data._PoliceCars.Count);
-            log += String.Format(" =>   {0}   AmbulanceAI\r\n", _data._Ambulances.Count);
-            log += String.Format(" =>   {0}   BusAI\r\n", _data._Buses.Count);
+            log += String.Format("{0}   Car(s)\r\n", _data._Cars.Count);
+            log += String.Format(" =>   {0}   Hearse(s)\r\n", _data._Hearses.Count);
+            log += String.Format(" =>   {0}   Garbage Truck(s)\r\n", _data._GarbageTrucks.Count);
+            log += String.Format(" =>   {0}   Fire Truck(s)\r\n", _data._FireTrucks.Count);
+            log += String.Format(" =>   {0}   Police Car(s)\r\n", _data._PoliceCars.Count);
+            log += String.Format(" =>   {0}   Ambulance(s)\r\n", _data._Ambulances.Count);
+            log += String.Format(" =>   {0}   Bus(s)\r\n", _data._Buses.Count);
             log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
             log += "\r\n";
-            log += String.Format("{0}   TrainAI\r\n", _data._Trains.Count);
-            log += String.Format("{0}   AircraftAI\r\n", _data._Aircrafts.Count);
-            log += String.Format("{0}   ShipAI\r\n", _data._Ships.Count);
+            log += String.Format("{0}   Train(s)\r\n", _data._Trains.Count);
+            log += String.Format("{0}   Aircraft\r\n", _data._Aircraft.Count);
+            log += String.Format("{0}   Ship(s)\r\n", _data._Ships.Count);
             log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
             log += "\r\n";
 

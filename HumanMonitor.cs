@@ -16,6 +16,8 @@ namespace SkylinesOverwatch
         private Helper _helper;
         private Data _data;
 
+        private HumanPrefabMapping _mapping;
+
         private bool _initialized;
         private bool _terminated;
         private bool _paused;
@@ -24,9 +26,10 @@ namespace SkylinesOverwatch
         private CitizenManager _instance;
         private int _capacity;
 
-        private Citizen _citizen;
+        private Citizen _human;
         private uint _id;
-        private HashSet<Type> _types;
+        private CitizenInfo _info;
+        private List<HashSet<uint>> _categories;
 
         public override void OnCreated(IThreading threading)
         {
@@ -91,13 +94,14 @@ namespace SkylinesOverwatch
                 {
                     _data = Data.Instance;
 
+                    _mapping = new HumanPrefabMapping();
+
                     _paused = false;
 
                     _instance = Singleton<CitizenManager>.instance;
                     _capacity = _instance.m_citizens.m_buffer.Length;
 
                     _id = (uint)_capacity;
-                    _types = new HashSet<Type>();
 
                     for (int i = 0; i < _capacity; i++)
                         UpdateHuman((uint)i);
@@ -106,6 +110,7 @@ namespace SkylinesOverwatch
 
                     _initialized = true;
                     _helper.HumanMonitorSpun = true;
+                    _helper.HumanMonitor = this;
 
                     _helper.Log("Human monitor initialized");
                 }
@@ -163,6 +168,7 @@ namespace SkylinesOverwatch
             _paused = false;
 
             _helper.HumanMonitorSpun = false;
+            _helper.HumanMonitor = null;
 
             if (_data != null)
             {
@@ -208,33 +214,21 @@ namespace SkylinesOverwatch
 
         private bool GetHuman()
         {
-            _citizen = _instance.m_citizens.m_buffer[(int)_id];
+            _human = _instance.m_citizens.m_buffer[(int)_id];
 
-            if (_citizen.Dead)
+            if (_human.Dead)
                 return false;
 
-            if ((_citizen.m_flags & Citizen.Flags.Created) == Citizen.Flags.None)
+            if ((_human.m_flags & Citizen.Flags.Created) == Citizen.Flags.None)
                 return false;
 
-            CitizenInfo info = _citizen.GetCitizenInfo(_id);
+            _info = _human.GetCitizenInfo(_id);
 
-            if (info == null)
+            if (_info == null)
                 return false;
 
-            if (info.m_citizenAI.IsAnimal())
+            if (_info.m_citizenAI.IsAnimal())
                 return false;
-
-            _types.Clear();
-            _types.Add(_helper.AiType.CitizenAI);
-
-            Type t = info.m_citizenAI.GetType();
-
-            while (!_types.Contains(t))
-            {
-                _types.Add(t);
-
-                t = t.BaseType;
-            }
 
             return true;
         }
@@ -246,18 +240,23 @@ namespace SkylinesOverwatch
             if (!GetHuman())
                 return false;
 
-            _data._Humans.Add(_id);
+            _categories = _mapping.GetMapping(_info);
 
-            if (_settings.Enable._Residents          && CheckResident())
-                return true;
-            if (_settings.Enable._ServicePersons     && CheckServicePerson())
-                return true;
-            if (_settings.Enable._Tourists           && CheckTourist())
-                return true;
-            if (_settings.Enable._HumanOther         && CheckHumanOther())
-                return true;
+            if (_categories.Count == 0)
+                return false;
+
+            foreach (HashSet<uint> category in _mapping.GetMapping(_info))
+                category.Add(_id);
 
             return false;
+        }
+
+        internal void RequestRemoval(uint id)
+        {
+            _id = id;
+
+            if (!GetHuman())
+                RemoveHuman(id);
         }
 
         private void RemoveHuman(uint id)
@@ -269,47 +268,6 @@ namespace SkylinesOverwatch
             _data._Tourists.Remove(id);
             _data._HumanOther.Remove(id);
         }
-
-        private bool Check(Type aiType, HashSet<uint> category)
-        {
-            if (_types.Contains(aiType))
-            {
-                category.Add(_id);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        #region Humans
-
-        private bool CheckHuman()
-        {
-            return Check(_helper.AiType.HumanAI, _data._Humans);
-        }
-
-        private bool CheckResident()
-        {
-            return Check(_helper.AiType.ResidentAI, _data._Residents);
-        }
-
-        private bool CheckServicePerson()
-        {
-            return Check(_helper.AiType.ServicePersonAI, _data._ServicePersons);
-        }
-
-        private bool CheckTourist()
-        {
-            return Check(_helper.AiType.TouristAI, _data._Tourists);
-        }
-
-        private bool CheckHumanOther()
-        {
-            _data._HumanOther.Add(_id);
-            return true;
-        }
-
-        #endregion
 
         private void OutputDebugLog()
         {
@@ -332,16 +290,10 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._HumansUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._HumansRemoved.Count);
             log += "\r\n";
-
-            if (_settings.Enable._Residents)
-                log += String.Format("{0}   ResidentAI\r\n", _data._Residents.Count);
-            if (_settings.Enable._ServicePersons)
-                log += String.Format("{0}   ServicePersonAI\r\n", _data._ServicePersons.Count);
-            if (_settings.Enable._Tourists)
-                log += String.Format("{0}   TouristAI\r\n", _data._Tourists.Count);
-            if (_settings.Enable._HumanOther)
-                log += String.Format("{0}   Other\r\n", _data._HumanOther.Count);
-
+            log += String.Format("{0}   Resident(s)\r\n", _data._Residents.Count);
+            log += String.Format("{0}   ServicePerson(s)\r\n", _data._ServicePersons.Count);
+            log += String.Format("{0}   Tourist(s)\r\n", _data._Tourists.Count);
+            log += String.Format("{0}   Other\r\n", _data._HumanOther.Count);
             log += "\r\n";
 
             _helper.Log(log);

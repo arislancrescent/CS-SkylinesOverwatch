@@ -68,7 +68,7 @@ namespace SkylinesOverwatch
             else if (ai is TrainAI)
                 _mapping.AddMapping(prefabID, _data._Trains);
             else if (ai is AircraftAI)
-                _mapping.AddMapping(prefabID, _data._Aircrafts);
+                _mapping.AddMapping(prefabID, _data._Aircraft);
             else if (ai is ShipAI)
                 _mapping.AddMapping(prefabID, _data._Ships);
             else

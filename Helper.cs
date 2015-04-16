@@ -22,20 +22,11 @@ namespace SkylinesOverwatch
             _VehicleMonitorSpun             = false;
             _HumanMonitorSpun               = false;
             _AnimalMonitorSpun              = false;
-
-            // Citizens
-            AiType.CitizenAI                = typeof(CitizenAI);
-
-            AiType.HumanAI                  = typeof(HumanAI);
-            AiType.ResidentAI               = typeof(ResidentAI);
-            AiType.ServicePersonAI          = typeof(ServicePersonAI);
-            AiType.TouristAI                = typeof(TouristAI);
         }
 
         private static readonly Helper _Instance = new Helper();
         public static Helper Instance { get { return _Instance; } }
 
-        internal AiTypes AiType;
         internal bool GameLoaded;
 
         private bool _BuildingMonitorSpun;
@@ -75,6 +66,7 @@ namespace SkylinesOverwatch
         internal BuildingMonitor BuildingMonitor;
         internal VehicleMonitor VehicleMonitor;
         internal AnimalMonitor AnimalMonitor;
+        internal HumanMonitor HumanMonitor;
 
         public void RequestBuildingRemoval(ushort id)
         {
@@ -88,21 +80,16 @@ namespace SkylinesOverwatch
                 VehicleMonitor.RequestRemoval(id);
         }
 
+        public void RequestHumanRemoval(uint id)
+        {
+            if (HumanMonitor != null)
+                HumanMonitor.RequestRemoval(id);
+        }
+
         public void RequestAnimalRemoval(ushort id)
         {
             if (AnimalMonitor != null)
                 AnimalMonitor.RequestRemoval(id);
-        }
-
-        internal struct AiTypes
-        {
-            // Citizens
-            public Type CitizenAI;
-
-            public Type HumanAI;
-            public Type ResidentAI;
-            public Type ServicePersonAI;
-            public Type TouristAI;
         }
 
         internal void Log(string message)

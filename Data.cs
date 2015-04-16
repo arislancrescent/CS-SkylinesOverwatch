@@ -44,7 +44,7 @@ namespace SkylinesOverwatch
 
             _Cars                    = new HashSet<ushort>();
             _Trains                  = new HashSet<ushort>();
-            _Aircrafts               = new HashSet<ushort>();
+            _Aircraft               = new HashSet<ushort>();
             _Ships                   = new HashSet<ushort>();
             _VehicleOther            = new HashSet<ushort>();
 
@@ -129,7 +129,7 @@ namespace SkylinesOverwatch
 
         internal HashSet<ushort> _Cars;
         internal HashSet<ushort> _Trains;
-        internal HashSet<ushort> _Aircrafts;
+        internal HashSet<ushort> _Aircraft;
         internal HashSet<ushort> _Ships;
         internal HashSet<ushort> _VehicleOther;
 
@@ -209,7 +209,7 @@ namespace SkylinesOverwatch
 
         public ushort[] Cars                    { get { return _Cars.ToArray<ushort>(); } }
         public ushort[] Trains                  { get { return _Trains.ToArray<ushort>(); } }
-        public ushort[] Aircrafts               { get { return _Aircrafts.ToArray<ushort>(); } }
+        public ushort[] Aircraft                { get { return _Aircraft.ToArray<ushort>(); } }
         public ushort[] Ships                   { get { return _Ships.ToArray<ushort>(); } }
         public ushort[] VehicleOther            { get { return _VehicleOther.ToArray<ushort>(); } }
 

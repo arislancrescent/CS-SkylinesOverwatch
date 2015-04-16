@@ -300,13 +300,9 @@ namespace SkylinesOverwatch
 
         internal void RequestRemoval(ushort id)
         {
-            CitizenInstance animal = _instance.m_instances.m_buffer[(int)id];
+            _id = id;
 
-            bool isCreated = (animal.m_flags & CitizenInstance.Flags.Created) != CitizenInstance.Flags.None;
-            bool isAnimal = animal.Info != null && animal.Info.m_citizenAI.IsAnimal();
-            bool isHidden = float.IsNegativeInfinity(animal.Info.m_maxRenderDistance);
-
-            if (!isCreated || !isAnimal || isHidden)
+            if (!GetAnimal())
                 RemoveAnimal(id);
         }
 
