@@ -261,9 +261,8 @@ namespace SkylinesOverwatch
             _buildingsAnimals.Remove(building);
         }
 
-        private bool UpdateAnimal(ushort id)
+        private bool GetAnimal()
         {
-            _id = id;
             _animal = _instance.m_instances.m_buffer[(int)_id];
 
             if (_animal.Info == null)
@@ -276,6 +275,16 @@ namespace SkylinesOverwatch
                 return false;
 
             if (float.IsNegativeInfinity(_animal.Info.m_maxRenderDistance))
+                return false;
+
+            return true;
+        }
+
+        private bool UpdateAnimal(ushort id)
+        {
+            _id = id;
+
+            if (!GetAnimal())
                 return false;
 
             _categories = _mapping.GetMapping(_animal.Info);

@@ -32,10 +32,15 @@ namespace SkylinesOverwatch
                 return new List<HashSet<T>>();
         }
 
-        public void AddMapping(int prefabID, HashSet<T> storage)
+        public void AddEntry(int prefabID)
         {
             if (!_mapping.ContainsKey(prefabID))
                 _mapping.Add(prefabID, new List<HashSet<T>>());
+        }
+
+        public void AddMapping(int prefabID, HashSet<T> storage)
+        {
+            AddEntry(prefabID);
 
             _mapping[prefabID].Add(storage);
         }

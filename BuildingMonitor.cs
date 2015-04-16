@@ -16,6 +16,8 @@ namespace SkylinesOverwatch
         private Helper _helper;
         private Data _data;
 
+        private BuildingPrefabMapping _mapping;
+
         private bool _initialized;
         private bool _terminated;
         private bool _paused;
@@ -26,9 +28,7 @@ namespace SkylinesOverwatch
 
         private Building _building;
         private ushort _id;
-        private HashSet<Type> _types;
-        private bool _isPlayer;
-        private bool _isPrivate;
+        private List<HashSet<ushort>> _categories;
 
         public override void OnCreated(IThreading threading)
         {
@@ -120,13 +120,14 @@ namespace SkylinesOverwatch
                 {
                     _data = Data.Instance;
 
+                    _mapping = new BuildingPrefabMapping();
+
                     _paused = false;
 
                     _instance = Singleton<BuildingManager>.instance;
                     _capacity = _instance.m_buildings.m_buffer.Length;
 
                     _id = (ushort)_capacity;
-                    _types = new HashSet<Type>();
 
                     for (ushort i = 0; i < _capacity; i++)
                     {
@@ -138,6 +139,7 @@ namespace SkylinesOverwatch
 
                     _initialized = true;
                     _helper.BuildingMonitorSpun = true;
+                    _helper.BuildingMonitor = this;
 
                     _helper.Log("Building monitor initialized");
                 }
@@ -195,6 +197,7 @@ namespace SkylinesOverwatch
             _paused = false;
 
             _helper.BuildingMonitorSpun = false;
+            _helper.BuildingMonitor = null;
 
             if (_data != null)
             {
@@ -215,6 +218,8 @@ namespace SkylinesOverwatch
                 _data._IndustrialBuildings.Clear();
                 _data._OfficeBuildings.Clear();
                 _data._PrivateOther.Clear();
+
+                _data._BuildingOther.Clear();
 
                 _data._BuildingsWithDead.Clear();
                 _data._BuildingsWithGarbage.Clear();
@@ -260,26 +265,11 @@ namespace SkylinesOverwatch
         {
             _building = _instance.m_buildings.m_buffer[(int)_id];
 
-            if ((_building.m_flags & Building.Flags.Created) == Building.Flags.None)
-                return false;
-
             if (_building.Info == null)
                 return false;
 
-            _isPlayer = false;
-            _isPrivate = false;
-
-            _types.Clear();
-            _types.Add(_helper.AiType.BuildingAI);
-
-            Type t = _building.Info.m_buildingAI.GetType();
-
-            while (!_types.Contains(t))
-            {
-                _types.Add(t);
-
-                t = t.BaseType;
-            }
+            if ((_building.m_flags & Building.Flags.Created) == Building.Flags.None)
+                return false;
 
             return true;
         }
@@ -291,41 +281,18 @@ namespace SkylinesOverwatch
 
             _id = id;
 
-            if (!GetBuilding() || !CheckBuilding())
+            if (!GetBuilding())
                 return false;
 
-            if (_settings.Enable._PlayerBuildings            && _isPlayer)
-            {
-                if (_settings.Enable._Cemeteries             && CheckCemetery())
-                    return true;
-                if (_settings.Enable._LandfillSites          && CheckLandfillSite())
-                    return true;
-                if (_settings.Enable._FireStations           && CheckFireStation())
-                    return true;
-                if (_settings.Enable._PoliceStations         && CheckPoliceStation())
-                    return true;
-                if (_settings.Enable._Hospitals              && CheckHospital())
-                    return true;
-                if (_settings.Enable._Parks                  && CheckPark())
-                    return true;
-                if (_settings.Enable._PlayerOther            && CheckPlayerOther())
-                    return true;
-            }
-            else if (_settings.Enable._PrivateBuildings      && _isPrivate)
-            {
-                if (_settings.Enable._ResidentialBuildings	 && CheckResidentialBuilding())
-                    return true;
-                if (_settings.Enable._CommercialBuildings    && CheckCommercialBuilding())
-                    return true;
-                if (_settings.Enable._IndustrialBuildings    && CheckIndustrialBuilding())
-                    return true;
-                if (_settings.Enable._OfficeBuildings        && CheckOfficeBuilding())
-                    return true;
-                if (_settings.Enable._PrivateOther           && CheckPrivateOther())
-                    return true;
-            }
+            _categories = _mapping.GetMapping(_building.Info);
 
-            return false;
+            if (_categories.Count == 0)
+                return false;
+
+            foreach (HashSet<ushort> category in _mapping.GetMapping(_building.Info))
+                category.Add(_id);
+
+            return true;
         }
 
         private bool UpdateBuilding(ushort id)
@@ -340,21 +307,34 @@ namespace SkylinesOverwatch
 
         private bool UpdateBuilding()
         {
-            if (!CheckAbandoned())
+            if (CheckAbandoned())
             {
-                if (_settings.Enable._DeadStatus     && CheckDead())
-                    return true;
-                if (_settings.Enable._GarbageStatus	 && CheckGarbage())
-                    return true;
-                if (_settings.Enable._FireStatus     && CheckFire())
-                    return true;
-                if (_settings.Enable._CrimeStatus    && CheckCrime())
-                    return true;
-                if (_settings.Enable._SickStatus     && CheckSick())
-                    return true;
+                _data._BuildingsWithDead.Remove(_id);
+                _data._BuildingsWithGarbage.Remove(_id);
+                _data._BuildingsWithFire.Remove(_id);
+                _data._BuildingsWithCrime.Remove(_id);
+                _data._BuildingsWithSick.Remove(_id);
+            }
+            else
+            {
+                CheckDead();
+                CheckGarbage();
+                CheckFire();
+                CheckCrime();
+                CheckSick();
             }
 
             return true;
+        }
+
+        internal void RequestRemoval(ushort id)
+        {
+            Building building = _instance.m_buildings.m_buffer[(int)id];
+
+            bool isCreated = (building.m_flags & Building.Flags.Created) == Building.Flags.None;
+
+            if (!isCreated)
+                RemoveBuilding(id);
         }
 
         private void RemoveBuilding(ushort id)
@@ -377,23 +357,14 @@ namespace SkylinesOverwatch
             _data._OfficeBuildings.Remove(id);
             _data._PrivateOther.Remove(id);
 
+            _data._BuildingOther.Remove(id);
+
             _data._BuildingsWithDead.Remove(id);
             _data._BuildingsWithGarbage.Remove(id);
             _data._BuildingsWithFire.Remove(id);
             _data._BuildingsWithCrime.Remove(id);
             _data._BuildingsWithSick.Remove(id);
             _data._BuildingsAbandoned.Remove(id);
-        }
-
-        private bool Check(Type aiType, HashSet<ushort> category)
-        {
-            if (_types.Contains(aiType))
-            {
-                category.Add(_id);
-                return true;
-            }
-            else
-                return false;
         }
 
         private bool Check(Building.Flags problems, HashSet<ushort> category)
@@ -423,102 +394,6 @@ namespace SkylinesOverwatch
                 return false;
             }
         }
-
-        private bool CheckBuilding()
-        {
-            _isPlayer = CheckPlayerBuilding();
-            _isPrivate = CheckPrivateBuilding();
-
-            if (_isPlayer || _isPrivate)
-            {
-                _data._Buildings.Add(_id);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        #region Player buildings
-
-        private bool CheckPlayerBuilding()
-        {
-            return Check(_helper.AiType.PlayerBuildingAI, _data._PlayerBuildings);
-        }
-
-        private bool CheckCemetery()
-        {
-            return Check(_helper.AiType.CemeteryAI, _data._Cemeteries);
-        }
-
-        private bool CheckLandfillSite()
-        {
-            return Check(_helper.AiType.LandfillSiteAI, _data._LandfillSites);
-        }
-
-        private bool CheckFireStation()
-        {
-            return Check(_helper.AiType.FireStationAI, _data._FireStations);
-        }
-
-        private bool CheckPoliceStation()
-        {
-            return Check(_helper.AiType.PoliceStationAI, _data._PoliceStations);
-        }
-
-        private bool CheckHospital()
-        {
-            return Check(_helper.AiType.HospitalAI, _data._Hospitals);
-        }
-
-        private bool CheckPark()
-        {
-            return Check(_helper.AiType.ParkAI, _data._Parks);
-        }
-
-        private bool CheckPlayerOther()
-        {
-            _data._PlayerOther.Add(_id);
-            return true;
-        }
-
-        #endregion
-
-        #region Private (NPC) buildings
-
-        private bool CheckPrivateBuilding()
-        {
-            return Check(_helper.AiType.PrivateBuildingAI, _data._PrivateBuildings);
-        }
-
-        private bool CheckResidentialBuilding()
-        {
-            return Check(_helper.AiType.ResidentialBuildingAI, _data._ResidentialBuildings);
-        }
-
-        private bool CheckCommercialBuilding()
-        {
-            return Check(_helper.AiType.CommercialBuildingAI, _data._CommercialBuildings);
-        }
-
-        private bool CheckIndustrialBuilding()
-        {
-            return Check(_helper.AiType.IndustrialBuildingAI, _data._IndustrialBuildings);
-        }
-
-        private bool CheckOfficeBuilding()
-        {
-            return Check(_helper.AiType.OfficeBuildingAI, _data._OfficeBuildings);
-        }
-
-        private bool CheckPrivateOther()
-        {
-            _data._PrivateOther.Add(_id);
-            return true;
-        }
-
-        #endregion
-
-        #region Building status
 
         private bool CheckAbandoned()
         {
@@ -550,8 +425,6 @@ namespace SkylinesOverwatch
             return Check(Notification.Problem.DirtyWater | Notification.Problem.Pollution | Notification.Problem.Noise, _data._BuildingsWithSick);
         }
 
-        #endregion
-
         private void OutputDebugLog()
         {
             if (!_helper.BuildingMonitorSpun) return;
@@ -573,58 +446,29 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   Updated\r\n", _data._BuildingsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._BuildingsRemoved.Count);
             log += "\r\n";
-
-            if (_settings.Enable._PlayerBuildings)
-            {
-                log += String.Format("{0}   PlayerBuildingAI\r\n", _data._PlayerBuildings.Count);
-
-                if (_settings.Enable._Cemeteries)
-                    log += String.Format(" =>   {0}   CemeteryAI\r\n", _data._Cemeteries.Count);
-                if (_settings.Enable._LandfillSites)
-                    log += String.Format(" =>   {0}   LandfillSiteAI\r\n", _data._LandfillSites.Count);
-                if (_settings.Enable._FireStations)
-                    log += String.Format(" =>   {0}   FireStationAI\r\n", _data._FireStations.Count);
-                if (_settings.Enable._PoliceStations)
-                    log += String.Format(" =>   {0}   PoliceStationAI\r\n", _data._PoliceStations.Count);
-                if (_settings.Enable._Hospitals)
-                    log += String.Format(" =>   {0}   HospitalAI\r\n", _data._Hospitals.Count);
-                if (_settings.Enable._Parks)
-                    log += String.Format(" =>   {0}   ParkAI\r\n", _data._Parks.Count);
-                if (_settings.Enable._PlayerOther)
-                    log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
-
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._PrivateBuildings)
-            {
-                log += String.Format("{0}   PrivateBuildingAI\r\n", _data._PrivateBuildings.Count);
-
-                if (_settings.Enable._ResidentialBuildings)
-                    log += String.Format(" =>   {0}   ResidentialBuildingAI\r\n", _data._ResidentialBuildings.Count);
-                if (_settings.Enable._CommercialBuildings)
-                    log += String.Format(" =>   {0}   CommercialBuildingAI\r\n", _data._CommercialBuildings.Count);
-                if (_settings.Enable._IndustrialBuildings)
-                    log += String.Format(" =>   {0}   IndustrialBuildingAI\r\n", _data._IndustrialBuildings.Count);
-                if (_settings.Enable._OfficeBuildings)
-                    log += String.Format(" =>   {0}   OfficeBuildingAI\r\n", _data._OfficeBuildings.Count);
-                if (_settings.Enable._PrivateOther)
-                    log += String.Format(" =>   {0}   Other\r\n", _data._PrivateOther.Count);
-
-                log += "\r\n";
-            }
-
-            if (_settings.Enable._DeadStatus)
-                log += String.Format("{0}   w/Death\r\n", _data._BuildingsWithDead.Count);
-            if (_settings.Enable._GarbageStatus)
-                log += String.Format("{0}   w/Garbage\r\n", _data._BuildingsWithGarbage.Count);
-            if (_settings.Enable._FireStatus)
-                log += String.Format("{0}   w/Fire\r\n", _data._BuildingsWithFire.Count);
-            if (_settings.Enable._CrimeStatus)
-                log += String.Format("{0}   w/Crime\r\n", _data._BuildingsWithCrime.Count);
-            if (_settings.Enable._SickStatus)
-                log += String.Format("{0}   w/Illness\r\n", _data._BuildingsWithSick.Count);
-
+            log += String.Format("{0}   PlayerBuilding(s)\r\n", _data._PlayerBuildings.Count);
+            log += String.Format(" =>   {0}   Cemetery(s)\r\n", _data._Cemeteries.Count);
+            log += String.Format(" =>   {0}   LandfillSite(s)\r\n", _data._LandfillSites.Count);
+            log += String.Format(" =>   {0}   FireStation(s)\r\n", _data._FireStations.Count);
+            log += String.Format(" =>   {0}   PoliceStation(s)\r\n", _data._PoliceStations.Count);
+            log += String.Format(" =>   {0}   Hospital(s)\r\n", _data._Hospitals.Count);
+            log += String.Format(" =>   {0}   Park(s)\r\n", _data._Parks.Count);
+            log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
+            log += "\r\n";
+            log += String.Format("{0}   PrivateBuilding(s)\r\n", _data._PrivateBuildings.Count);
+            log += String.Format(" =>   {0}   ResidentialBuilding(s)\r\n", _data._ResidentialBuildings.Count);
+            log += String.Format(" =>   {0}   CommercialBuilding(s)\r\n", _data._CommercialBuildings.Count);
+            log += String.Format(" =>   {0}   IndustrialBuilding(s)\r\n", _data._IndustrialBuildings.Count);
+            log += String.Format(" =>   {0}   OfficeBuilding(s)\r\n", _data._OfficeBuildings.Count);
+            log += String.Format(" =>   {0}   Other\r\n", _data._PrivateOther.Count);
+            log += "\r\n";
+            log += String.Format("{0}   Other Building(s)\r\n", _data._BuildingOther.Count);
+            log += "\r\n";
+            log += String.Format("{0}   w/Death\r\n", _data._BuildingsWithDead.Count);
+            log += String.Format("{0}   w/Garbage\r\n", _data._BuildingsWithGarbage.Count);
+            log += String.Format("{0}   w/Fire\r\n", _data._BuildingsWithFire.Count);
+            log += String.Format("{0}   w/Crime\r\n", _data._BuildingsWithCrime.Count);
+            log += String.Format("{0}   w/Illness\r\n", _data._BuildingsWithSick.Count);
             log += String.Format("{0}   Abandoned\r\n", _data._BuildingsAbandoned.Count);
             log += "\r\n";
 

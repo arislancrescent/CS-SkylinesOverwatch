@@ -71,6 +71,13 @@ namespace SkylinesOverwatch
             CitizenAI ai = animal.m_citizenAI;
             int prefabID = animal.m_prefabDataIndex;
 
+            /*
+             * Create a blank entry. This way, even if this prefab does not belong here
+             * for some bizarre reason, we will have a record of it. This eliminates
+             * the chance of a prefab getting evaluated more than once, ever.
+             */
+            _mapping.AddEntry(prefabID);
+
             if (ai is AnimalAI)
             {
                 _mapping.AddMapping(prefabID, _data._Animals);
@@ -113,9 +120,7 @@ namespace SkylinesOverwatch
                         _mapping.AddMapping(prefabID, _data._Moose);
                 }
                 else
-                {
                     _mapping.AddMapping(prefabID, _data._AnimalOther);
-                }
             }
         }
     }

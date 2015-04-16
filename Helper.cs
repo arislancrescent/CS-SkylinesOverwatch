@@ -23,22 +23,6 @@ namespace SkylinesOverwatch
             _HumanMonitorSpun               = false;
             _AnimalMonitorSpun              = false;
 
-            AiType.BuildingAI               = typeof(BuildingAI);
-
-            AiType.PlayerBuildingAI         = typeof(PlayerBuildingAI);
-            AiType.CemeteryAI               = typeof(CemeteryAI);
-            AiType.LandfillSiteAI           = typeof(LandfillSiteAI);
-            AiType.FireStationAI            = typeof(FireStationAI);
-            AiType.PoliceStationAI          = typeof(PoliceStationAI);
-            AiType.HospitalAI               = typeof(HospitalAI);
-            AiType.ParkAI                   = typeof(ParkAI);
-
-            AiType.PrivateBuildingAI        = typeof(PrivateBuildingAI);
-            AiType.ResidentialBuildingAI    = typeof(ResidentialBuildingAI);
-            AiType.CommercialBuildingAI     = typeof(CommercialBuildingAI);
-            AiType.IndustrialBuildingAI     = typeof(IndustrialBuildingAI);
-            AiType.OfficeBuildingAI         = typeof(OfficeBuildingAI);
-
             // Vehicles
             AiType.VehicleAI                = typeof(VehicleAI);
 
@@ -104,7 +88,14 @@ namespace SkylinesOverwatch
         internal bool HumanMonitorSpinnable     { get { return GameLoaded; } }
         internal bool AnimalMonitorSpinnable    { get { return BuildingMonitorSpun; } }
 
+        internal BuildingMonitor BuildingMonitor;
         internal AnimalMonitor AnimalMonitor;
+
+        public void RequestBuildingRemoval(ushort id)
+        {
+            if (BuildingMonitor != null)
+                BuildingMonitor.RequestRemoval(id);
+        }
 
         public void RequestAnimalRemoval(ushort id)
         {
@@ -114,23 +105,6 @@ namespace SkylinesOverwatch
 
         internal struct AiTypes
         {
-            // Buildings
-            public Type BuildingAI;
-
-            public Type PlayerBuildingAI;
-            public Type CemeteryAI;
-            public Type LandfillSiteAI;
-            public Type FireStationAI;
-            public Type PoliceStationAI;
-            public Type HospitalAI;
-            public Type ParkAI;
-
-            public Type PrivateBuildingAI;
-            public Type ResidentialBuildingAI;
-            public Type CommercialBuildingAI;
-            public Type IndustrialBuildingAI;
-            public Type OfficeBuildingAI;
-
             // Vehicles
             public Type VehicleAI;
 

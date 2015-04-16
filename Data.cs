@@ -28,6 +28,8 @@ namespace SkylinesOverwatch
             _OfficeBuildings         = new HashSet<ushort>();
             _PrivateOther            = new HashSet<ushort>();
 
+            _BuildingOther            = new HashSet<ushort>();
+
             _BuildingsAbandoned      = new HashSet<ushort>();
             _BuildingsWithDead       = new HashSet<ushort>();
             _BuildingsWithGarbage    = new HashSet<ushort>();
@@ -111,6 +113,8 @@ namespace SkylinesOverwatch
         internal HashSet<ushort> _OfficeBuildings;
         internal HashSet<ushort> _PrivateOther;
 
+        internal HashSet<ushort> _BuildingOther;
+
         internal HashSet<ushort> _BuildingsAbandoned;
         internal HashSet<ushort> _BuildingsWithDead;
         internal HashSet<ushort> _BuildingsWithGarbage;
@@ -189,6 +193,8 @@ namespace SkylinesOverwatch
         public ushort[] IndustrialBuildings     { get { return _IndustrialBuildings.ToArray<ushort>(); } }
         public ushort[] OfficeBuildings         { get { return _OfficeBuildings.ToArray<ushort>(); } }
         public ushort[] PrivateOther            { get { return _PrivateOther.ToArray<ushort>(); } }
+
+        public ushort[] BuildingOther           { get { return _BuildingOther.ToArray<ushort>(); } }
 
         public ushort[] BuildingsAbandoned      { get { return _BuildingsAbandoned.ToArray<ushort>(); } }
         public ushort[] BuildingsWithDead       { get { return _BuildingsWithDead.ToArray<ushort>(); } }

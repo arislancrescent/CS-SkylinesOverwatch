@@ -26,28 +26,6 @@ namespace SkylinesOverwatch
 
             Enable._BuildingMonitor         = false;
 
-            Enable._PlayerBuildings         = false;
-            Enable._Cemeteries              = false;
-            Enable._LandfillSites           = false;
-            Enable._FireStations            = false;
-            Enable._PoliceStations          = false;
-            Enable._Hospitals               = false;
-            Enable._Parks                   = false;
-            Enable._PlayerOther             = false;
-
-            Enable._PrivateBuildings        = false;
-            Enable._ResidentialBuildings    = false;
-            Enable._CommercialBuildings     = false;
-            Enable._IndustrialBuildings     = false;
-            Enable._OfficeBuildings         = false;
-            Enable._PrivateOther            = false;
-
-            Enable._DeadStatus              = false;
-            Enable._GarbageStatus           = false;
-            Enable._FireStatus              = false;
-            Enable._CrimeStatus             = false;
-            Enable._SickStatus              = false;
-
             Enable._VehicleMonitor          = false;
 
             Enable._Cars                    = false;
@@ -93,53 +71,38 @@ namespace SkylinesOverwatch
             public bool BuildingMonitor
             {
                 get { return _BuildingMonitor; }
-                set { if (value) _BuildingMonitor = value; }
+                set { if (value) _BuildingMonitor = true; }
             }
 
             public bool VehicleMonitor
             {
                 get { return _VehicleMonitor; }
-                set { if (value) _VehicleMonitor = value; }
+                set { if (value) _VehicleMonitor = true; }
             }
 
             public bool HumanMonitor
             {
                 get { return _HumanMonitor; }
-                set { if (value) _HumanMonitor = value; }
+                set { if (value) _HumanMonitor = true; }
             }
 
             public bool AnimalMonitor
             {
                 get { return _AnimalMonitor; }
-                set { if (value) _AnimalMonitor = value; }
+                set
+                {
+                    if (value)
+                    {
+                        _BuildingMonitor = true;
+                        _AnimalMonitor = true;
+                    }
+                }
             }
         }
 
         public struct EnableSettings
         {
             internal bool _BuildingMonitor;
-
-            internal bool _PlayerBuildings;
-            internal bool _Cemeteries;
-            internal bool _LandfillSites;
-            internal bool _FireStations;
-            internal bool _PoliceStations;
-            internal bool _Hospitals;
-            internal bool _Parks;
-            internal bool _PlayerOther;
-
-            internal bool _PrivateBuildings;
-            internal bool _ResidentialBuildings;
-            internal bool _CommercialBuildings;
-            internal bool _IndustrialBuildings;
-            internal bool _OfficeBuildings;
-            internal bool _PrivateOther;
-
-            internal bool _DeadStatus;
-            internal bool _GarbageStatus;
-            internal bool _FireStatus;
-            internal bool _CrimeStatus;
-            internal bool _SickStatus;
 
             internal bool _VehicleMonitor;
 
@@ -170,120 +133,6 @@ namespace SkylinesOverwatch
             {
                 get { return _BuildingMonitor; }
                 set { if (value) _BuildingMonitor = value; }
-            }
-
-            public bool PlayerBuildings
-            {
-                get { return _PlayerBuildings; }
-                set { if (value) _PlayerBuildings = value; }
-            }
-
-            public bool Cemeteries
-            {
-                get { return _Cemeteries; }
-                set { if (value) _Cemeteries = value; }
-            }
-
-            public bool LandfillSites
-            {
-                get { return _LandfillSites; }
-                set { if (value) _LandfillSites = value; }
-            }
-
-            public bool FireStations
-            {
-                get { return _FireStations; }
-                set { if (value) _FireStations = value; }
-            }
-
-            public bool PoliceStations
-            {
-                get { return _PoliceStations; }
-                set { if (value) _PoliceStations = value; }
-            }
-
-            public bool Hospitals
-            {
-                get { return _Hospitals; }
-                set { if (value) _Hospitals = value; }
-            }
-
-            public bool Parks
-            {
-                get { return _Parks; }
-                set { if (value) _Parks = value; }
-            }
-
-            public bool PlayerOther
-            {
-                get { return _PlayerOther; }
-                set { if (value) _PlayerOther = value; }
-            }
-
-            public bool PrivateBuildings
-            {
-                get { return _PrivateBuildings; }
-                set { if (value) _PrivateBuildings = value; }
-            }
-
-            public bool ResidentialBuildings
-            {
-                get { return _ResidentialBuildings; }
-                set { if (value) _ResidentialBuildings = value; }
-            }
-
-            public bool CommercialBuildings
-            {
-                get { return _CommercialBuildings; }
-                set { if (value) _CommercialBuildings = value; }
-            }
-
-            public bool IndustrialBuildings
-            {
-                get { return _IndustrialBuildings; }
-                set { if (value) _IndustrialBuildings = value; }
-            }
-
-            public bool OfficeBuildings
-            {
-                get { return _OfficeBuildings; }
-                set { if (value) _OfficeBuildings = value; }
-            }
-
-            public bool PrivateOther
-            {
-                get { return _PrivateOther; }
-                set { if (value) _PrivateOther = value; }
-            }
-
-            public bool DeadStatus
-            {
-                get { return _DeadStatus; }
-                set { if (value) _DeadStatus = value; }
-            }
-
-            public bool GarbageStatus
-            {
-                get { return _GarbageStatus; }
-                set { if (value) _GarbageStatus = value; }
-            }
-
-            public bool FireStatus
-            {
-                get { return _FireStatus; }
-                set { if (value) _FireStatus = value; }
-            }
-
-            public bool CrimeStatus
-            {
-                get { return _CrimeStatus; }
-                set { if (value) _CrimeStatus = value; }
-            }
-
-            public bool SickStatus
-            {
-                get { return _SickStatus; }
-                set { if (value) _SickStatus = value; }
             }
 
             public bool VehicleMonitor
