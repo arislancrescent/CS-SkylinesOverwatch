@@ -292,7 +292,7 @@ namespace SkylinesOverwatch
             if (_categories.Count == 0)
                 return false;
 
-            foreach (HashSet<ushort> category in _mapping.GetMapping(_animal.Info))
+            foreach (HashSet<ushort> category in _categories)
                 category.Add(_id);
 
             return true;

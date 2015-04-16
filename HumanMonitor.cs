@@ -245,10 +245,10 @@ namespace SkylinesOverwatch
             if (_categories.Count == 0)
                 return false;
 
-            foreach (HashSet<uint> category in _mapping.GetMapping(_info))
+            foreach (HashSet<uint> category in _categories)
                 category.Add(_id);
 
-            return false;
+            return true;
         }
 
         internal void RequestRemoval(uint id)
