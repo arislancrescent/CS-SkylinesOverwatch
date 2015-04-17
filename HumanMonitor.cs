@@ -222,6 +222,9 @@ namespace SkylinesOverwatch
             if ((_human.m_flags & Citizen.Flags.Created) == Citizen.Flags.None)
                 return false;
 
+            if ((_human.m_flags & Citizen.Flags.DummyTraffic) != Citizen.Flags.None)
+                return false;
+
             _info = _human.GetCitizenInfo(_id);
 
             if (_info == null)
