@@ -66,7 +66,18 @@ namespace SkylinesOverwatch
                     _mapping.AddMapping(prefabID, _data._CarOther);
             }
             else if (ai is TrainAI)
+            {
                 _mapping.AddMapping(prefabID, _data._Trains);
+
+                if (ai is MetroTrainAI)
+                    _mapping.AddMapping(prefabID, _data._MetroTrains);
+                else if (ai is PassengerTrainAI)
+                    _mapping.AddMapping(prefabID, _data._PassengerTrains);
+                else if (ai is CargoTrainAI)
+                    _mapping.AddMapping(prefabID, _data._CargoTrains);
+                else
+                    _mapping.AddMapping(prefabID, _data._TrainOther);
+            }
             else if (ai is AircraftAI)
                 _mapping.AddMapping(prefabID, _data._Aircraft);
             else if (ai is ShipAI)

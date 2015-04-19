@@ -28,7 +28,7 @@ namespace SkylinesOverwatch
             _OfficeBuildings         = new HashSet<ushort>();
             _PrivateOther            = new HashSet<ushort>();
 
-            _BuildingOther            = new HashSet<ushort>();
+            _BuildingOther           = new HashSet<ushort>();
 
             _BuildingsAbandoned      = new HashSet<ushort>();
             _BuildingsWithDead       = new HashSet<ushort>();
@@ -44,7 +44,7 @@ namespace SkylinesOverwatch
 
             _Cars                    = new HashSet<ushort>();
             _Trains                  = new HashSet<ushort>();
-            _Aircraft               = new HashSet<ushort>();
+            _Aircraft                = new HashSet<ushort>();
             _Ships                   = new HashSet<ushort>();
             _VehicleOther            = new HashSet<ushort>();
 
@@ -55,6 +55,11 @@ namespace SkylinesOverwatch
             _Ambulances              = new HashSet<ushort>();
             _Buses                   = new HashSet<ushort>();
             _CarOther                = new HashSet<ushort>();
+
+            _PassengerTrains         = new HashSet<ushort>();
+            _MetroTrains             = new HashSet<ushort>();
+            _CargoTrains             = new HashSet<ushort>();
+            _TrainOther              = new HashSet<ushort>();
 
             // Humans
             _Humans                  = new HashSet<uint>();
@@ -141,6 +146,11 @@ namespace SkylinesOverwatch
         internal HashSet<ushort> _Buses;
         internal HashSet<ushort> _CarOther;
 
+        internal HashSet<ushort> _PassengerTrains;
+        internal HashSet<ushort> _MetroTrains;
+        internal HashSet<ushort> _CargoTrains;
+        internal HashSet<ushort> _TrainOther;
+
         // Humans
         internal HashSet<uint>   _Humans;
         internal HashSet<uint>   _HumansUpdated;
@@ -220,6 +230,11 @@ namespace SkylinesOverwatch
         public ushort[] Ambulances              { get { return _Ambulances.ToArray<ushort>(); } }
         public ushort[] Buses                   { get { return _Buses.ToArray<ushort>(); } }
         public ushort[] CarOther                { get { return _CarOther.ToArray<ushort>(); } }
+
+        public ushort[] PassengerTrains         { get { return _PassengerTrains.ToArray<ushort>(); } }
+        public ushort[] MetroTrains             { get { return _MetroTrains.ToArray<ushort>(); } }
+        public ushort[] CargoTrains             { get { return _CargoTrains.ToArray<ushort>(); } }
+        public ushort[] TrainOther              { get { return _TrainOther.ToArray<ushort>(); } }
 
         public uint[]   Humans                  { get { return _Humans.ToArray<uint>(); } }
         public uint[]   HumansUpdated           { get { return _HumansUpdated.ToArray<uint>(); } }
