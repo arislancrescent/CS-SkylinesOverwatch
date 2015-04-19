@@ -219,6 +219,9 @@ namespace SkylinesOverwatch
         {
             _vehicle = _instance.m_vehicles.m_buffer[(int)_id];
 
+            if (_vehicle.m_leadingVehicle != 0)
+                return false;
+            
             if (_vehicle.Info == null)
                 return false;
 
@@ -304,6 +307,11 @@ namespace SkylinesOverwatch
             log += String.Format(" =>   {0}   Other\r\n", _data._CarOther.Count);
             log += "\r\n";
             log += String.Format("{0}   Train(s)\r\n", _data._Trains.Count);
+            log += String.Format(" =>   {0}   Passenger Train(s)\r\n", _data._PassengerTrains.Count);
+            log += String.Format(" =>   {0}   Metro Train(s)\r\n", _data._MetroTrains.Count);
+            log += String.Format(" =>   {0}   Cargo Train(s)\r\n", _data._CargoTrains.Count);
+            log += String.Format(" =>   {0}   Other\r\n", _data._TrainOther.Count);
+            log += "\r\n";
             log += String.Format("{0}   Aircraft\r\n", _data._Aircraft.Count);
             log += String.Format("{0}   Ship(s)\r\n", _data._Ships.Count);
             log += String.Format("{0}   Other\r\n", _data._VehicleOther.Count);
