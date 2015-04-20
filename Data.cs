@@ -265,5 +265,88 @@ namespace SkylinesOverwatch
         public ushort[] Moose                   { get { return _Moose.ToArray<ushort>(); } }
 
         public ushort[] AnimalOther             { get { return _AnimalOther.ToArray<ushort>(); } }
+
+        // Public type checkers
+        public bool isBuilding(ushort id)               { return _Buildings.Contains(id); }
+        public bool isBuildingUpdated(ushort id)        { return _BuildingsUpdated.Contains(id); }
+        public bool isBuildingRemoved(ushort id)        { return _BuildingsRemoved.Contains(id); }
+
+        public bool isPlayerBuilding(ushort id)         { return _PlayerBuildings.Contains(id); }
+        public bool isCemetery(ushort id)               { return _Cemeteries.Contains(id); }
+        public bool isLandfillSite(ushort id)           { return _LandfillSites.Contains(id); }
+        public bool isFireStation(ushort id)            { return _FireStations.Contains(id); }
+        public bool isPoliceStation(ushort id)          { return _PoliceStations.Contains(id); }
+        public bool isHospital(ushort id)               { return _Hospitals.Contains(id); }
+        public bool isPark(ushort id)                   { return _Parks.Contains(id); }
+        public bool isPlayerOther(ushort id)            { return _PlayerOther.Contains(id); }
+
+        public bool isPrivateBuilding(ushort id)        { return _PrivateBuildings.Contains(id); }
+        public bool isResidentialBuilding(ushort id)    { return _ResidentialBuildings.Contains(id); }
+        public bool isCommercialBuilding(ushort id)     { return _CommercialBuildings.Contains(id); }
+        public bool isIndustrialBuilding(ushort id)     { return _IndustrialBuildings.Contains(id); }
+        public bool isOfficeBuilding(ushort id)         { return _OfficeBuildings.Contains(id); }
+        public bool isPrivateOther(ushort id)           { return _PrivateOther.Contains(id); }
+
+        public bool isBuildingOther(ushort id)          { return _BuildingOther.Contains(id); }
+
+        public bool isBuildingsAbandoned(ushort id)     { return _BuildingsAbandoned.Contains(id); }
+        public bool isBuildingsWithDead(ushort id)      { return _BuildingsWithDead.Contains(id); }
+        public bool isBuildingsWithGarbage(ushort id)   { return _BuildingsWithGarbage.Contains(id); }
+        public bool isBuildingsWithFire(ushort id)      { return _BuildingsWithFire.Contains(id); }
+        public bool isBuildingsWithCrime(ushort id)     { return _BuildingsWithCrime.Contains(id); }
+        public bool isBuildingsWithSick(ushort id)      { return _BuildingsWithSick.Contains(id); }
+
+        public bool isVehicle(ushort id)                { return _Vehicles.Contains(id); }
+        public bool isVehicleUpdated(ushort id)         { return _VehiclesUpdated.Contains(id); }
+        public bool isVehicleRemoved(ushort id)         { return _VehiclesRemoved.Contains(id); }
+
+        public bool isCar(ushort id)                    { return _Cars.Contains(id); }
+        public bool isTrain(ushort id)                  { return _Trains.Contains(id); }
+        public bool isAircraf(ushort id)                { return _Aircraft.Contains(id); }
+        public bool isShip(ushort id)                   { return _Ships.Contains(id); }
+        public bool isVehicleOther(ushort id)           { return _VehicleOther.Contains(id); }
+
+        public bool isHearse(ushort id)                 { return _Hearses.Contains(id); }
+        public bool isGarbageTruck(ushort id)           { return _GarbageTrucks.Contains(id); }
+        public bool isFireTruck(ushort id)              { return _FireTrucks.Contains(id); }
+        public bool isPoliceCar(ushort id)              { return _PoliceCars.Contains(id); }
+        public bool isAmbulance(ushort id)              { return _Ambulances.Contains(id); }
+        public bool isBuse(ushort id)                   { return _Buses.Contains(id); }
+        public bool isCarOther(ushort id)               { return _CarOther.Contains(id); }
+
+        public bool isPassengerTrain(ushort id)         { return _PassengerTrains.Contains(id); }
+        public bool isMetroTrain(ushort id)             { return _MetroTrains.Contains(id); }
+        public bool isCargoTrain(ushort id)             { return _CargoTrains.Contains(id); }
+        public bool isTrainOther(ushort id)             { return _TrainOther.Contains(id); }
+
+        public bool isHuman(uint id)                    { return _Humans.Contains(id); }
+        public bool isHumanUpdated(uint id)             { return _HumansUpdated.Contains(id); }
+        public bool isHumanRemoved(uint id)             { return _HumansRemoved.Contains(id); }
+
+        public bool isResident(uint id)                 { return _Residents.Contains(id); }
+        public bool isServicePerson(uint id)            { return _ServicePersons.Contains(id); }
+        public bool isTourist(uint id)                  { return _Tourists.Contains(id); }
+        public bool isHumanOther(uint id)               { return _HumanOther.Contains(id); }
+
+        public bool isAnimal(ushort id)                 { return _Animals.Contains(id); }
+        public bool isAnimalUpdated(ushort id)          { return _AnimalsUpdated.Contains(id); }
+        public bool isAnimalRemoved(ushort id)          { return _AnimalsRemoved.Contains(id); }
+
+        public bool isBird(ushort id)                   { return _Birds.Contains(id); }
+        public bool isSeagull(ushort id)                { return _Seagulls.Contains(id); }
+
+        public bool isLivestock(ushort id)              { return _Livestock.Contains(id); }
+        public bool isCow(ushort id)                    { return _Cows.Contains(id); }
+        public bool isPig(ushort id)                    { return _Pigs.Contains(id); }
+
+        public bool isPet(ushort id)                    { return _Pets.Contains(id); }
+        public bool isDog(ushort id)                    { return _Dogs.Contains(id); }
+
+        public bool isWildlife(ushort id)               { return _Wildlife.Contains(id); }
+        public bool isWolf(ushort id)                   { return _Wolves.Contains(id); }
+        public bool isBear(ushort id)                   { return _Bears.Contains(id); }
+        public bool isMoose(ushort id)                  { return _Moose.Contains(id); }
+
+        public bool isAnimalOther(ushort id)            { return _AnimalOther.Contains(id); }
     }
 }
