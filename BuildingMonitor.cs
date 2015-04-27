@@ -402,7 +402,16 @@ namespace SkylinesOverwatch
 
         private bool CheckDead()
         {
-            return Check(Notification.Problem.Death, _data._BuildingsWithDead);
+            if (_building.m_deathProblemTimer > 0)
+            {
+                _data._BuildingsWithDead.Add(_id);
+                return true;
+            }
+            else
+            {
+                _data._BuildingsWithDead.Remove(_id);
+                return false;
+            }
         }
 
         private bool CheckGarbage()
