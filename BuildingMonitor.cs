@@ -210,6 +210,7 @@ namespace SkylinesOverwatch
                 _data._PoliceStations.Clear();
                 _data._Hospitals.Clear();
                 _data._Parks.Clear();
+                _data._PowerPlants.Clear();
                 _data._PlayerOther.Clear();
 
                 _data._PrivateBuildings.Clear();
@@ -346,6 +347,7 @@ namespace SkylinesOverwatch
             _data._PoliceStations.Remove(id);
             _data._Hospitals.Remove(id);
             _data._Parks.Remove(id);
+            _data._PowerPlants.Remove(id);
             _data._PlayerOther.Remove(id);
 
             _data._PrivateBuildings.Remove(id);
@@ -451,6 +453,7 @@ namespace SkylinesOverwatch
             log += String.Format(" =>   {0}   PoliceStation(s)\r\n", _data._PoliceStations.Count);
             log += String.Format(" =>   {0}   Hospital(s)\r\n", _data._Hospitals.Count);
             log += String.Format(" =>   {0}   Park(s)\r\n", _data._Parks.Count);
+            log += String.Format(" =>   {0}   PowerPlant(s)\r\n", _data._PowerPlants.Count);
             log += String.Format(" =>   {0}   Other\r\n", _data._PlayerOther.Count);
             log += "\r\n";
             log += String.Format("{0}   Private Building(s)\r\n", _data._PrivateBuildings.Count);

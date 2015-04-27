@@ -60,6 +60,8 @@ namespace SkylinesOverwatch
                     _mapping.AddMapping(prefabID, _data._Hospitals);
                 else if (ai is ParkAI)
                     _mapping.AddMapping(prefabID, _data._Parks);
+                else if (ai is PowerPlantAI)
+                    _mapping.AddMapping(prefabID, _data._PowerPlants);
                 else
                     _mapping.AddMapping(prefabID, _data._PlayerOther);
             }

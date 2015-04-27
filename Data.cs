@@ -19,6 +19,7 @@ namespace SkylinesOverwatch
             _PoliceStations          = new HashSet<ushort>();
             _Hospitals               = new HashSet<ushort>();
             _Parks                   = new HashSet<ushort>();
+            _PowerPlants             = new HashSet<ushort>();
             _PlayerOther             = new HashSet<ushort>();
 
             _PrivateBuildings        = new HashSet<ushort>();
@@ -109,6 +110,7 @@ namespace SkylinesOverwatch
         internal HashSet<ushort> _PoliceStations;
         internal HashSet<ushort> _Hospitals;
         internal HashSet<ushort> _Parks;
+        internal HashSet<ushort> _PowerPlants;
         internal HashSet<ushort> _PlayerOther;
 
         internal HashSet<ushort> _PrivateBuildings;
@@ -195,6 +197,7 @@ namespace SkylinesOverwatch
         public ushort[] PoliceStations          { get { return _PoliceStations.ToArray<ushort>(); } }
         public ushort[] Hospitals               { get { return _Hospitals.ToArray<ushort>(); } }
         public ushort[] Parks                   { get { return _Parks.ToArray<ushort>(); } }
+        public ushort[] PowerPlants             { get { return _PowerPlants.ToArray<ushort>(); } }
         public ushort[] PlayerOther             { get { return _PlayerOther.ToArray<ushort>(); } }
 
         public ushort[] PrivateBuildings        { get { return _PrivateBuildings.ToArray<ushort>(); } }
@@ -278,6 +281,7 @@ namespace SkylinesOverwatch
         public bool IsPoliceStation(ushort id)          { return _PoliceStations.Contains(id); }
         public bool IsHospital(ushort id)               { return _Hospitals.Contains(id); }
         public bool IsPark(ushort id)                   { return _Parks.Contains(id); }
+        public bool IsPowerPlant(ushort id)             { return _PowerPlants.Contains(id); }
         public bool IsPlayerOther(ushort id)            { return _PlayerOther.Contains(id); }
 
         public bool IsPrivateBuilding(ushort id)        { return _PrivateBuildings.Contains(id); }
