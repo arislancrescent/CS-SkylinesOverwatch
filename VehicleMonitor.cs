@@ -221,6 +221,9 @@ namespace SkylinesOverwatch
 
             if (_vehicle.m_leadingVehicle != 0)
                 return false;
+
+            if (_vehicle.m_cargoParent != 0)
+                return false;
             
             if (_vehicle.Info == null)
                 return false;
