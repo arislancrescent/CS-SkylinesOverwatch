@@ -293,12 +293,12 @@ namespace SkylinesOverwatch
 
         public bool IsBuildingOther(ushort id)          { return _BuildingOther.Contains(id); }
 
-        public bool IsBuildingsAbandoned(ushort id)     { return _BuildingsAbandoned.Contains(id); }
-        public bool IsBuildingsWithDead(ushort id)      { return _BuildingsWithDead.Contains(id); }
-        public bool IsBuildingsWithGarbage(ushort id)   { return _BuildingsWithGarbage.Contains(id); }
-        public bool IsBuildingsWithFire(ushort id)      { return _BuildingsWithFire.Contains(id); }
-        public bool IsBuildingsWithCrime(ushort id)     { return _BuildingsWithCrime.Contains(id); }
-        public bool IsBuildingsWithSick(ushort id)      { return _BuildingsWithSick.Contains(id); }
+        public bool IsBuildingAbandoned(ushort id)      { return _BuildingsAbandoned.Contains(id); }
+        public bool IsBuildingWithDead(ushort id)       { return _BuildingsWithDead.Contains(id); }
+        public bool IsBuildingWithGarbage(ushort id)    { return _BuildingsWithGarbage.Contains(id); }
+        public bool IsBuildingWithFire(ushort id)       { return _BuildingsWithFire.Contains(id); }
+        public bool IsBuildingWithCrime(ushort id)      { return _BuildingsWithCrime.Contains(id); }
+        public bool IsBuildingWithSick(ushort id)       { return _BuildingsWithSick.Contains(id); }
 
         public bool IsVehicle(ushort id)                { return _Vehicles.Contains(id); }
         public bool IsVehicleUpdated(ushort id)         { return _VehiclesUpdated.Contains(id); }
