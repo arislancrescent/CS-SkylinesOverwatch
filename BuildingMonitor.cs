@@ -228,6 +228,12 @@ namespace SkylinesOverwatch
                 _data._BuildingsWithCrime.Clear();
                 _data._BuildingsWithSick.Clear();
                 _data._BuildingsAbandoned.Clear();
+                _data._BuildingsBurnedDown.Clear();
+
+                _data._BuildingsCapacityFull.Clear();
+                _data._BuildingsCapacityStep1.Clear();
+                _data._BuildingsCapacityStep2.Clear();
+
             }
 
             base.OnReleased();
@@ -315,6 +321,23 @@ namespace SkylinesOverwatch
                 _data._BuildingsWithFire.Remove(_id);
                 _data._BuildingsWithCrime.Remove(_id);
                 _data._BuildingsWithSick.Remove(_id);
+                _data._BuildingsCapacityFull.Remove(_id);
+                _data._BuildingsCapacityStep1.Remove(_id);
+                _data._BuildingsCapacityStep2.Remove(_id);
+                
+            }
+            else if (CheckBurnedDown())
+            {
+                _data._BuildingsWithDead.Remove(_id);
+                _data._BuildingsWithGarbage.Remove(_id);
+                _data._BuildingsWithFire.Remove(_id);
+                _data._BuildingsWithCrime.Remove(_id);
+                _data._BuildingsWithSick.Remove(_id);
+                _data._BuildingsAbandoned.Remove(_id);
+                _data._BuildingsCapacityFull.Remove(_id);
+                _data._BuildingsCapacityStep1.Remove(_id);
+                _data._BuildingsCapacityStep2.Remove(_id);
+                
             }
             else
             {
@@ -365,6 +388,11 @@ namespace SkylinesOverwatch
             _data._BuildingsWithCrime.Remove(id);
             _data._BuildingsWithSick.Remove(id);
             _data._BuildingsAbandoned.Remove(id);
+            _data._BuildingsBurnedDown.Remove(id);
+            
+            _data._BuildingsCapacityFull.Remove(id);
+            _data._BuildingsCapacityStep1.Remove(id);
+            _data._BuildingsCapacityStep2.Remove(id);
         }
 
         private bool Check(Building.Flags problems, HashSet<ushort> category)
@@ -395,9 +423,26 @@ namespace SkylinesOverwatch
             }
         }
 
+        private bool CheckCapacityFull()
+        {
+            return Check(Building.Flags.CapacityFull, _data._BuildingsCapacityFull);
+        }
+        private bool CheckCapacityStep1()
+        {
+            return Check(Building.Flags.CapacityStep1, _data._BuildingsCapacityStep1);
+        }
+        private bool CheckCapacityStep2()
+        {
+            return Check(Building.Flags.CapacityStep2, _data._BuildingsCapacityStep2);
+        }
         private bool CheckAbandoned()
         {
             return Check(Building.Flags.Abandoned, _data._BuildingsAbandoned);
+        }
+
+        private bool CheckBurnedDown()
+        {
+            return Check(Building.Flags.BurnedDown, _data._BuildingsBurnedDown);
         }
 
         private bool CheckDead()
@@ -480,7 +525,12 @@ namespace SkylinesOverwatch
             log += String.Format("{0}   w/Crime\r\n", _data._BuildingsWithCrime.Count);
             log += String.Format("{0}   w/Illness\r\n", _data._BuildingsWithSick.Count);
             log += String.Format("{0}   Abandoned\r\n", _data._BuildingsAbandoned.Count);
+            log += String.Format("{0}   BurnedDown\r\n", _data._BuildingsBurnedDown.Count);
+            log += String.Format("{0}   CapacityFull\r\n", _data._BuildingsCapacityFull.Count);
+            log += String.Format("{0}   CapacityStep1\r\n", _data._BuildingsCapacityStep1.Count);
+            log += String.Format("{0}   CapacityStep2\r\n", _data._BuildingsCapacityStep2.Count);
             log += "\r\n";
+
 
             _helper.Log(log);
 
