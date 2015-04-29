@@ -31,17 +31,18 @@ namespace SkylinesOverwatch
 
             _BuildingOther           = new HashSet<ushort>();
 
-            _BuildingsAbandoned = new HashSet<ushort>();
-            _BuildingsBurnedDown = new HashSet<ushort>();
+            _BuildingsAbandoned      = new HashSet<ushort>();
+            _BuildingsBurnedDown     = new HashSet<ushort>();
+
             _BuildingsWithDead       = new HashSet<ushort>();
             _BuildingsWithGarbage    = new HashSet<ushort>();
             _BuildingsWithFire       = new HashSet<ushort>();
             _BuildingsWithCrime      = new HashSet<ushort>();
             _BuildingsWithSick       = new HashSet<ushort>();
 
-            _BuildingsCapacityFull = new HashSet<ushort>();
-            _BuildingsCapacityStep1 = new HashSet<ushort>();
-            _BuildingsCapacityStep2 = new HashSet<ushort>();
+            _BuildingsCapacityStep1  = new HashSet<ushort>();
+            _BuildingsCapacityStep2  = new HashSet<ushort>();
+            _BuildingsCapacityFull   = new HashSet<ushort>();
 
             // Vehicles
             _Vehicles                = new HashSet<ushort>();
@@ -129,15 +130,16 @@ namespace SkylinesOverwatch
 
         internal HashSet<ushort> _BuildingsAbandoned;
         internal HashSet<ushort> _BuildingsBurnedDown;
+
         internal HashSet<ushort> _BuildingsWithDead;
         internal HashSet<ushort> _BuildingsWithGarbage;
         internal HashSet<ushort> _BuildingsWithFire;
         internal HashSet<ushort> _BuildingsWithCrime;
         internal HashSet<ushort> _BuildingsWithSick;
 
-        internal HashSet<ushort> _BuildingsCapacityFull;
         internal HashSet<ushort> _BuildingsCapacityStep1;
         internal HashSet<ushort> _BuildingsCapacityStep2;
+        internal HashSet<ushort> _BuildingsCapacityFull;
 
         // Vehicles
         internal HashSet<ushort> _Vehicles;
@@ -219,16 +221,18 @@ namespace SkylinesOverwatch
 
         public ushort[] BuildingOther           { get { return _BuildingOther.ToArray<ushort>(); } }
 
-        public ushort[] BuildingsCapacityFull { get { return _BuildingsCapacityFull.ToArray<ushort>(); } }
-        public ushort[] BuildingsCapacityStep1 { get { return _BuildingsCapacityStep1.ToArray<ushort>(); } }
-        public ushort[] BuildingsCapacityStep2 { get { return _BuildingsCapacityStep2.ToArray<ushort>(); } }
-        public ushort[] BuildingsAbandoned { get { return _BuildingsAbandoned.ToArray<ushort>(); } }
-        public ushort[] BuildingsBurnedDown { get { return _BuildingsBurnedDown.ToArray<ushort>(); } }
+        public ushort[] BuildingsAbandoned      { get { return _BuildingsAbandoned.ToArray<ushort>(); } }
+        public ushort[] BuildingsBurnedDown     { get { return _BuildingsBurnedDown.ToArray<ushort>(); } }
+
         public ushort[] BuildingsWithDead       { get { return _BuildingsWithDead.ToArray<ushort>(); } }
         public ushort[] BuildingsWithGarbage    { get { return _BuildingsWithGarbage.ToArray<ushort>(); } }
         public ushort[] BuildingsWithFire       { get { return _BuildingsWithFire.ToArray<ushort>(); } }
         public ushort[] BuildingsWithCrime      { get { return _BuildingsWithCrime.ToArray<ushort>(); } }
         public ushort[] BuildingsWithSick       { get { return _BuildingsWithSick.ToArray<ushort>(); } }
+
+        public ushort[] BuildingsCapacityStep1  { get { return _BuildingsCapacityStep1.ToArray<ushort>(); } }
+        public ushort[] BuildingsCapacityStep2  { get { return _BuildingsCapacityStep2.ToArray<ushort>(); } }
+        public ushort[] BuildingsCapacityFull   { get { return _BuildingsCapacityFull.ToArray<ushort>(); } }
 
         public ushort[] Vehicles                { get { return _Vehicles.ToArray<ushort>(); } }
         public ushort[] VehiclesUpdated         { get { return _VehiclesUpdated.ToArray<ushort>(); } }
@@ -307,16 +311,18 @@ namespace SkylinesOverwatch
 
         public bool IsBuildingOther(ushort id)          { return _BuildingOther.Contains(id); }
 
-        public bool IsBuildingCapacityFull(ushort id) { return _BuildingsCapacityFull.Contains(id); }
-        public bool IsBuildingCapacityStep1(ushort id) { return _BuildingsCapacityStep1.Contains(id); }
-        public bool IsBuildingCapacityStep2(ushort id) { return _BuildingsCapacityStep2.Contains(id); }
-        public bool IsBuildingAbandoned(ushort id) { return _BuildingsAbandoned.Contains(id); }
-        public bool IsBuildingBurnedDown(ushort id) { return _BuildingsBurnedDown.Contains(id); }
-        public bool IsBuildingWithDead(ushort id) { return _BuildingsWithDead.Contains(id); }
+        public bool IsBuildingAbandoned(ushort id)      { return _BuildingsAbandoned.Contains(id); }
+        public bool IsBuildingBurnedDown(ushort id)     { return _BuildingsBurnedDown.Contains(id); }
+
+        public bool IsBuildingWithDead(ushort id)       { return _BuildingsWithDead.Contains(id); }
         public bool IsBuildingWithGarbage(ushort id)    { return _BuildingsWithGarbage.Contains(id); }
         public bool IsBuildingWithFire(ushort id)       { return _BuildingsWithFire.Contains(id); }
         public bool IsBuildingWithCrime(ushort id)      { return _BuildingsWithCrime.Contains(id); }
         public bool IsBuildingWithSick(ushort id)       { return _BuildingsWithSick.Contains(id); }
+
+        public bool IsBuildingCapacityStep1(ushort id)  { return _BuildingsCapacityStep1.Contains(id); }
+        public bool IsBuildingCapacityStep2(ushort id)  { return _BuildingsCapacityStep2.Contains(id); }
+        public bool IsBuildingCapacityFull(ushort id)   { return _BuildingsCapacityFull.Contains(id); }
 
         public bool IsVehicle(ushort id)                { return _Vehicles.Contains(id); }
         public bool IsVehicleUpdated(ushort id)         { return _VehiclesUpdated.Contains(id); }
