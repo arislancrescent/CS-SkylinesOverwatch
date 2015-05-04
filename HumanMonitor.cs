@@ -112,7 +112,7 @@ namespace SkylinesOverwatch
                     _helper.HumanMonitorSpun = true;
                     _helper.HumanMonitor = this;
 
-                    _helper.Log("Human monitor initialized");
+                    _helper.NotifyPlayer("Human monitor initialized");
                 }
                 else if (!SimulationManager.instance.SimulationPaused)
                 {

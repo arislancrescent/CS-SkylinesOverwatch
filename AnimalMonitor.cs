@@ -112,7 +112,7 @@ namespace SkylinesOverwatch
                     _helper.AnimalMonitorSpun = true;
                     _helper.AnimalMonitor = this;
 
-                    _helper.Log("Animal monitor initialized");
+                    _helper.NotifyPlayer("Animal monitor initialized");
                 }
                 else if (_data.BuildingsUpdated.Length > 0)
                 {

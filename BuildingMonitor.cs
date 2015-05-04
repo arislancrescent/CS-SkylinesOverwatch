@@ -141,7 +141,7 @@ namespace SkylinesOverwatch
                     _helper.BuildingMonitorSpun = true;
                     _helper.BuildingMonitor = this;
 
-                    _helper.Log("Building monitor initialized");
+                    _helper.NotifyPlayer("Building monitor initialized");
                 }
                 else if (!SimulationManager.instance.SimulationPaused)
                 {

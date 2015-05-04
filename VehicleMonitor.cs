@@ -106,7 +106,7 @@ namespace SkylinesOverwatch
                     _helper.VehicleMonitorSpun = true;
                     _helper.VehicleMonitor = this;
 
-                    _helper.Log("Vehicle monitor initialized");
+                    _helper.NotifyPlayer("Vehicle monitor initialized");
                 }
                 else if (!SimulationManager.instance.SimulationPaused)
                 {
