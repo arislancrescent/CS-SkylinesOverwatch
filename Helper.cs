@@ -94,7 +94,7 @@ namespace SkylinesOverwatch
 
         internal void Log(string message)
         {
-            DebugOutputPanel.AddMessage(PluginManager.MessageType.Message, String.Format("{0}: {1}", Settings.Instance.Tag, message));
+            Debug.Log(String.Format("{0}: {1}", Settings.Instance.Tag, message));
         }
     }
 }
