@@ -454,7 +454,16 @@ namespace SkylinesOverwatch
 
         private bool CheckGarbage()
         {
-            return Check(Notification.Problem.Garbage, _data._BuildingsWithGarbage);
+            if (_building.Info.m_buildingAI.GetGarbageAmount(_id, ref _building) > 2500)
+            {
+                _data._BuildingsWithGarbage.Add(_id);
+                return true;
+            }
+            else
+            {
+                _data._BuildingsWithGarbage.Remove(_id);
+                return false;
+            }
         }
 
         private bool CheckFire()
