@@ -30,6 +30,9 @@ namespace SkylinesOverwatch
         private ushort _id;
         private List<HashSet<ushort>> _categories;
 
+        private HashSet<ushort> _added;
+        private HashSet<ushort> _removed;
+
         public override void OnCreated(IThreading threading)
         {
             _settings = Settings.Instance;
@@ -37,6 +40,9 @@ namespace SkylinesOverwatch
 
             _initialized = false;
             _terminated = false;
+
+            _added = new HashSet<ushort>();
+            _removed = new HashSet<ushort>();
 
             base.OnCreated(threading);
         }
@@ -73,7 +79,14 @@ namespace SkylinesOverwatch
                     for (int j = 0; j < 64; j++)
                     {
                         if ((ub & (ulong)1 << j) != 0)
-                            ProcessBuilding((ushort)(i << 6 | j));
+                        {
+                            ushort id = (ushort)(i << 6 | j);
+
+                            if (ProcessBuilding(id))
+                                _added.Add(id);
+                            else
+                                _removed.Add(id);
+                        }
                     }
                 }
             }
@@ -129,6 +142,9 @@ namespace SkylinesOverwatch
 
                     _id = (ushort)_capacity;
 
+                    _added.Clear();
+                    _removed.Clear();
+
                     for (ushort i = 0; i < _capacity; i++)
                     {
                         if (ProcessBuilding(i))
@@ -145,8 +161,19 @@ namespace SkylinesOverwatch
                 }
                 else if (!SimulationManager.instance.SimulationPaused)
                 {
+                    _data._BuildingsAdded.Clear();
                     _data._BuildingsUpdated.Clear();
                     _data._BuildingsRemoved.Clear();
+
+                    foreach (ushort i in _added)
+                        _data._BuildingsAdded.Add(i);
+
+                    _added.Clear();
+
+                    foreach (ushort i in _removed)
+                        _data._BuildingsRemoved.Add(i);
+
+                    _removed.Clear();
 
                     int end = GetFrame();
 
@@ -514,6 +541,7 @@ namespace SkylinesOverwatch
             log += "==== BUILDINGS ====\r\n";
             log += "\r\n";
             log += String.Format("{0}   Total\r\n", _data._Buildings.Count);
+            log += String.Format("{0}   Added\r\n", _data._BuildingsAdded.Count);
             log += String.Format("{0}   Updated\r\n", _data._BuildingsUpdated.Count);
             log += String.Format("{0}   Removed\r\n", _data._BuildingsRemoved.Count);
             log += "\r\n";

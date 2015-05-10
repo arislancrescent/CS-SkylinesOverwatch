@@ -9,6 +9,7 @@ namespace SkylinesOverwatch
         private Data()
         {
             _Buildings               = new HashSet<ushort>();
+            _BuildingsAdded          = new HashSet<ushort>();
             _BuildingsUpdated        = new HashSet<ushort>();
             _BuildingsRemoved        = new HashSet<ushort>();
 
@@ -106,6 +107,7 @@ namespace SkylinesOverwatch
 
         // Buildings
         internal HashSet<ushort> _Buildings;
+        internal HashSet<ushort> _BuildingsAdded;
         internal HashSet<ushort> _BuildingsUpdated;
         internal HashSet<ushort> _BuildingsRemoved;
 
@@ -199,6 +201,7 @@ namespace SkylinesOverwatch
 
         // Public accessors
         public ushort[] Buildings               { get { return _Buildings.ToArray<ushort>(); } }
+        public ushort[] BuildingsAdded          { get { return _BuildingsAdded.ToArray<ushort>(); } }
         public ushort[] BuildingsUpdated        { get { return _BuildingsUpdated.ToArray<ushort>(); } }
         public ushort[] BuildingsRemoved        { get { return _BuildingsRemoved.ToArray<ushort>(); } }
 
@@ -289,6 +292,7 @@ namespace SkylinesOverwatch
 
         // Public type checkers
         public bool IsBuilding(ushort id)               { return _Buildings.Contains(id); }
+        public bool IsBuildingAdded(ushort id)          { return _BuildingsAdded.Contains(id); }
         public bool IsBuildingUpdated(ushort id)        { return _BuildingsUpdated.Contains(id); }
         public bool IsBuildingRemoved(ushort id)        { return _BuildingsRemoved.Contains(id); }
 
